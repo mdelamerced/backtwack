@@ -13,31 +13,41 @@ var nameValidation = function(val) {
 	}
 }
 
-
-// ship's log schema
-var shipLogSchema = new Schema({
-	date : Date,
-	content : String
+// tweets
+var tweetSchema = new Schema({
+	username : Date,
+	timePost: String,
+	verifiedAccount: Boolean,
+	embedLine : String,
 })
 
+// related tweets
+var relatedTweets = new Schema({
+	tweets : [tweetSchema],
+	
+})
+
+// news articles
+var newsArts = new Schema({
+	headline = String,
+	newsUrl = String,
+	bodyText = String,
+	newstimePosted = String,
+})
+
+// related news articles
+
+var relnewsArticles = new Schema ({
+	relnewsArts = [newsArts],
+})
 
 // define astronaut schema
-var AstronautSchema = new Schema({
-    slug : { type: String, lowercase: true, required: true, unique: true },
-	name : { type: String, required: true, validate: [nameValidation, 'Name must be at least 5 characters.']},
-	birthdate : Date,
-	missions : [String],
-	photo : String,
-	source : {
-		name : String,
-		url : String
-	},
-	skills : [String],
-	walkedOnMoon : Boolean,
-    lastupdated : { type: Date, default: Date.now },
-    shiplogs : [shipLogSchema]
+var normandySchema = new Schema({
+	relatednewsArts : [newsArts],
+	relatedTweets : [tweetSchema],
+    lastupdated : { type: Date, default: Date.now }
 });
 
 
-// export 'Astronaut' model
+// export 'normandy' model
 module.exports = mongoose.model('normandy',normandySchema);

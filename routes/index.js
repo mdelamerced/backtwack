@@ -23,7 +23,7 @@ exports.index = function(req, res) {
 	// 3) callback function with (err, results)
 	//    err will include any error that occurred
 	//	  allAstros is our resulting array of astronauts
-	astronautModel.find({}, 'name slug source', function(err, allAstros){
+	normandyModel.find({}, 'name slug source', function(err, allAstros){
 
 		if (err) {
 			res.send("Unable to query database for astronauts").status(500);
@@ -52,7 +52,7 @@ exports.detail = function(req, res) {
 	var astro_id = req.params.astro_id;
 
 	// query the database for astronaut
-	var astroQuery = astronautModel.findOne({slug:astro_id});
+	var astroQuery = normandyModel.findOne({slug:astro_id});
 	astroQuery.exec(function(err, currentAstronaut){
 
 		if (err) {
@@ -74,7 +74,7 @@ exports.detail = function(req, res) {
         };
 		
 		//query for all astronauts, return only name and slug
-		astronautModel.find({}, 'name slug', function(err, allAstros){
+		normandyModel.find({}, 'name slug', function(err, allAstros){
 
 			console.log("retrieved all astronauts : " + allAstros.length);
 
@@ -116,7 +116,7 @@ exports.createAstro = function(req, res) {
 	console.log(req.body);
 
 	// accept form post data
-	var newAstro = new astronautModel({
+	var newAstro = new normandyModel({
 		name : req.body.name,
 		photo : req.body.photoUrl,
 		source : {
@@ -168,7 +168,7 @@ exports.editAstroForm = function(req, res) {
 
 	// Get astronaut from URL params
 	var astro_id = req.params.astro_id;
-	var astroQuery = astronautModel.findOne({slug:astro_id});
+	var astroQuery = normandyModel.findOne({slug:astro_id});
 	astroQuery.exec(function(err, astronaut){
 
 		if (err) {
@@ -306,7 +306,7 @@ exports.deleteAstro = function(req,res) {
 
 	if (req.query.confirm == 'yes')  {
 	
-		astronautModel.remove({slug:astro_id}, function(err){
+		normandyModel.remove({slug:astro_id}, function(err){
 			if (err){ 
 				console.error(err);
 				res.send("Error when trying to remove astronaut: "+ astro_id);
@@ -317,7 +317,7 @@ exports.deleteAstro = function(req,res) {
 
 	} else {
 		//query astronaut and display confirm page
-		astronautModel.findOne({slug:astro_id}, function(err, astronaut){
+		normandyModel.findOne({slug:astro_id}, function(err, astronaut){
 
 			if (err) {
 				console.error("ERROR");
