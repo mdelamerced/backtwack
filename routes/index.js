@@ -23,17 +23,17 @@ exports.index = function(req, res) {
 	// 3) callback function with (err, results)
 	//    err will include any error that occurred
 	//	  allAstros is our resulting array of astronauts
-	normandyModel.find({}, 'name slug source', function(err, allAstros){
+	normandyModel.find({}, 'name slug source', function(err, allMains){
 
 		if (err) {
-			res.send("Unable to query database for astronauts").status(500);
+			res.send("Unable to query database for articles").status(500);
 		};
 
-		console.log("retrieved " + allAstros.length + " astronauts from database");
+		console.log("retrieved " + allMains.length + " articles from database");
 
 		var templateData = {
-			astros : allAstros,
-			pageTitle : "NASA Astronauts (" + allAstros.length + ")"
+			mains : allMains,
+			pageTitle : "Main articles (" + allMains.length + ")"
 		}
 
 		res.render('index.html', templateData);
@@ -46,43 +46,43 @@ exports.index = function(req, res) {
 */
 exports.detail = function(req, res) {
 
-	console.log("detail page requested for " + req.params.astro_id);
+	console.log("detail page requested for " + req.params.main_id);
 
 	//get the requested astronaut by the param on the url :astro_id
-	var astro_id = req.params.astro_id;
+	var main_id = req.params.main_id;
 
 	// query the database for astronaut
-	var astroQuery = normandyModel.findOne({slug:astro_id});
-	astroQuery.exec(function(err, currentAstronaut){
+	var astroQuery = normandyModel.findOne({slug:main_id});
+	mainQuery.exec(function(err, currentMain){
 
 		if (err) {
-			return res.status(500).send("There was an error on the astronaut query");
+			return res.status(500).send("There was an error on the query");
 		}
 
-		if (currentAstronaut == null) {
+		if (currentMain == null) {
 			return res.status(404).render('404.html');
 		}
 
-		console.log("Found astro");
-		console.log(currentAstronaut.name);
+		console.log("Found article");
+		console.log(currentMain.mainHeadline);
 
 		// formattedBirthdate function for currentAstronaut
-		currentAstronaut.formattedBirthdate = function() {
+	/*	currentMain.formattedBirthdate = function() {
 			// formatting a JS date with moment
 			// http://momentjs.com/docs/#/displaying/format/
             return moment(this.birthdate).format("dddd, MMMM Do YYYY");
         };
-		
+		*/
 		//query for all astronauts, return only name and slug
-		normandyModel.find({}, 'name slug', function(err, allAstros){
+		normandyModel.find({}, 'name slug', function(err, allMain){
 
-			console.log("retrieved all astronauts : " + allAstros.length);
+			console.log("retrieved all astronauts : " + allMain.length);
 
 			//prepare template data for view
 			var templateData = {
-				astro : currentAstronaut,
-				astros : allAstros,
-				pageTitle : currentAstronaut.name
+				main : currentMain,
+				mains : allMain,
+				pageTitle : currentMain.mainHeadline
 			}
 
 			// render and return the template
@@ -98,10 +98,10 @@ exports.detail = function(req, res) {
 /*
 	GET /create
 */
-exports.astroForm = function(req, res){
+exports.mainForm = function(req, res){
 
 	var templateData = {
-		page_title : 'Enlist a new astronaut'
+		page_title : 'Add a new article'
 	};
 
 	res.render('create_form.html', templateData);
@@ -110,7 +110,7 @@ exports.astroForm = function(req, res){
 /*
 	POST /create
 */
-exports.createAstro = function(req, res) {
+exports.createMain = function(req, res) {
 	
 	console.log("received form submission");
 	console.log(req.body);

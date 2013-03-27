@@ -61,23 +61,26 @@ var routes = require('./routes/index.js');
 
 app.get('/', routes.index);
 
-//new astronaut routes
-app.get('/create',routes.astroForm); //display form
-app.post('/create',routes.createAstro); //form POST submits here
+//new main routes
+app.get('/create',routes.mainForm); //display form
+app.post('/create',routes.createMain); //form POST submits here
 
-// display a single astronaut
-app.get('/astronauts/:astro_id', routes.detail);
+// display a single main
+app.get('/main/:main_id', routes.detail);
 
-// edit astronaut
-app.get('/astronauts/:astro_id/edit', routes.editAstroForm); //GET display form
-app.post('/astronauts/:astro_id/edit', routes.updateAstro); //POST update database
+// edit main
+app.get('/main/:main_id/edit', routes.editMainForm); //GET display form
+app.post('/main/:main_id/edit', routes.updateMain); //POST update database
 
-// delete astronaut
-app.get('/astronauts/:astro_id/delete', routes.deleteAstro);
+// delete main
+app.get('/main/:main_id/delete', routes.deleteMain);
 
 // add ship's log
-app.post('/astronauts/:astro_id/addshiplog', routes.postShipLog);
+app.post('/main/:main_id/addshiplog', routes.postShipLog);
 
+// add a tweet
+
+// add a news article
 
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){

@@ -15,7 +15,7 @@ var nameValidation = function(val) {
 
 // tweets
 var tweetSchema = new Schema({
-	username : Date,
+	username : { String,required: true },
 	timePost: String,
 	verifiedAccount: Boolean,
 	embedLine : String,
@@ -29,20 +29,25 @@ var relatedTweets = new Schema({
 
 // news articles
 var newsArts = new Schema({
-	headline = String,
-	newsUrl = String,
-	bodyText = String,
-	newstimePosted = String,
+	headline : String,
+	newsUrl : { String, required : true },
+	bodyText : String,
+	newstimePosted : String,
 })
 
 // related news articles
-
 var relnewsArticles = new Schema ({
-	relnewsArts = [newsArts],
+	relnewsArts : [newsArts],
 })
 
-// define astronaut schema
+// define main article schema
 var normandySchema = new Schema({
+	slug : {type: String, lowercase: true, required: true, unique: true },
+	mainHeadline : String, 
+	userPost : {
+		userName : String,
+		userText : String,
+	},
 	relatednewsArts : [newsArts],
 	relatedTweets : [tweetSchema],
     lastupdated : { type: Date, default: Date.now }
