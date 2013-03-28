@@ -19,7 +19,7 @@ exports.index = function(req, res) {
 	// query for all astronauts
 	// .find will accept 3 arguments
 	// 1) an object for filtering {} (empty here)
-	// 2) a string of properties to be return, 'name slug source' will return only the name, slug and source returned astronauts
+	// 2) a string of properties to be return, 'name slug source' will return only the name, slug and source returned main articles
 	// 3) callback function with (err, results)
 	//    err will include any error that occurred
 	//	  allAstros is our resulting array of astronauts
@@ -42,17 +42,17 @@ exports.index = function(req, res) {
 }
 
 /*
-	GET /astronauts/:astro_id
+	GET /main/:main_id
 */
 exports.detail = function(req, res) {
 
 	console.log("detail page requested for " + req.params.main_id);
 
-	//get the requested astronaut by the param on the url :astro_id
+	//get the requested main by the param on the url :astro_id
 	var main_id = req.params.main_id;
 
 	// query the database for astronaut
-	var astroQuery = normandyModel.findOne({slug:main_id});
+	var mainQuery = normandyModel.findOne({slug:main_id});
 	mainQuery.exec(function(err, currentMain){
 
 		if (err) {
@@ -76,7 +76,7 @@ exports.detail = function(req, res) {
 		//query for all astronauts, return only name and slug
 		normandyModel.find({}, 'name slug', function(err, allMain){
 
-			console.log("retrieved all astronauts : " + allMain.length);
+			console.log("retrieved all articles : " + allMain.length);
 
 			//prepare template data for view
 			var templateData = {
@@ -116,78 +116,65 @@ exports.createMain = function(req, res) {
 	console.log(req.body);
 
 	// accept form post data
-	var newAstro = new normandyModel({
-		name : req.body.name,
-		photo : req.body.photoUrl,
-		source : {
-			name : req.body.source_name,
-			url : req.body.source_url
-		},
-		slug : req.body.name.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
+	var newMain = new normandyModel({
+		mainHeadline : req.body.mainHeadline,
+		slug : req.body.mainHeadline.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
 
 	});
-
-	// you can also add properties with the . (dot) notation
-	if (req.body.birthdate) {
-		newAstro.birthdate = moment(req.body.birthdate).toDate();
-	}
-
-	newAstro.skills = req.body.skills.split(",");
-
-	// walked on moon checkbox
-	if (req.body.walkedonmoon) {
+	// boolean checkbox
+/*	if (req.body.walkedonmoon) {
 		newAstro.walkedOnMoon = true;
 	}
-	
+	*/
 	// save the newAstro to the database
-	newAstro.save(function(err){
+	newMain.save(function(err){
 		if (err) {
-			console.error("Error on saving new astronaut");
+			console.error("Error on saving new article");
 			console.error(err); // log out to Terminal all errors
 
 			var templateData = {
-				page_title : 'Enlist a new astronaut',
+				page_title : 'Start a new article',
 				errors : err.errors, 
-				astro : req.body
+				main : req.body
 			};
 
 			res.render('create_form.html', templateData);
 			// return res.send("There was an error when creating a new astronaut");
 
 		} else {
-			console.log("Created a new astronaut!");
-			console.log(newAstro);
+			console.log("Created a new article!");
+			console.log(newMain);
 			
 			// redirect to the astronaut's page
-			res.redirect('/astronauts/'+ newAstro.slug)
+			res.redirect('/main/'+ newMain.slug)
 		}
 	});
 };
 
-exports.editAstroForm = function(req, res) {
+exports.editMainForm = function(req, res) {
 
 	// Get astronaut from URL params
-	var astro_id = req.params.astro_id;
-	var astroQuery = normandyModel.findOne({slug:astro_id});
-	astroQuery.exec(function(err, astronaut){
+	var main_id = req.params.main_id;
+	var mainQuery = normandyModel.findOne({slug:main_id});
+	mainQuery.exec(function(err, main){
 
 		if (err) {
 			console.error("ERROR");
 			console.error(err);
-			res.send("There was an error querying for "+ astro_id).status(500);
+			res.send("There was an error querying for "+ main_id).status(500);
 		}
 
-		if (astronaut != null) {
+		if (main != null) {
 
 			// birthdateForm function for edit form
 			// html input type=date needs YYYY-MM-DD format
-			astronaut.birthdateForm = function() {
+			/*astronaut.birthdateForm = function() {
 					return moment(this.birthdate).format("YYYY-MM-DD");
-			}
+			}*/
 
 			// prepare template data
 			var templateData = {
-				astro : astronaut
+				main : mains
 			};
 
 			// render template
@@ -195,7 +182,7 @@ exports.editAstroForm = function(req, res) {
 
 		} else {
 
-			console.log("unable to find astronaut: " + astro_id);
+			console.log("unable to find article: " + main_id);
 			return res.status(404).render('404.html');
 		}
 
@@ -203,132 +190,234 @@ exports.editAstroForm = function(req, res) {
 
 }
 
-exports.updateAstro = function(req, res) {
+exports.updateMain = function(req, res) {
 
-	// Get astronaut from URL params
-	var astro_id = req.params.astro_id;
+	// Get article from URL params
+	var main_id = req.params.main_id;
 
 	// prepare form data
 	var updatedData = {
-		name : req.body.name,
-		photo : req.body.photoUrl,
-		source : {
-			name : req.body.source_name,
-			url : req.body.source_url
-		},
-		birthdate : moment(req.body.birthdate).toDate(),
-		skills : req.body.skills.split(","),
-
-		walkedOnMoon : (req.body.walkedonmoon) ? true : false
-		
+		mainHeadline : req.body.mainHeadline,		
 	}
 
-
-	// query for astronaut
-	astronautModel.update({slug:astro_id}, { $set: updatedData}, function(err, astronaut){
+	// query for article
+	normandyModel.update({slug:main_id}, { $set: updatedData}, function(err, main){
 
 		if (err) {
 			console.error("ERROR: While updating");
 			console.error(err);			
 		}
 
-		if (astronaut != null) {
-			res.redirect('/astronauts/' + astro_id);
+		if (main != null) {
+			res.redirect('/main/' + main_id);
 
 		} else {
 
-			// unable to find astronaut, return 404
-			console.error("unable to find astronaut: " + astro_id);
+			// unable to find article, return 404
+			console.error("unable to find article: " + main_id);
 			return res.status(404).render('404.html');
 		}
 	})
 }
 
-exports.postShipLog = function(req, res) {
+//post new tweet embed
+exports.postNews = function(req, res) {
 
 	// Get astronaut from URL params
-	var astro_id = req.params.astro_id;
+	var main_id = req.params.main_id;
 
-	// query database for astronaut
-	astronautModel.findOne({slug:astro_id}, function(err, astronaut){
+	// query database for article
+	normandyModel.findOne({slug:main_id}, function(err, main){
 
 		if (err) {
 			console.error("ERROR");
 			console.error(err);
-			res.send("There was an error querying for "+ astro_id).status(500);
+			res.send("There was an error querying for "+ main_id).status(500);
 		}
 
-		if (astronaut != null) {
+		if (main != null) {
 
-			// found the astronaut
+			// found the article
 
 			// concatenate submitted date field + time field
 			var datetimestr = req.body.logdate + " " + req.body.logtime;
 
 			console.log(datetimestr);
 			
-			// add a new shiplog
-			var logData = {
+			// add a new tweet
+			var news = {
 				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
-				content : req.body.logcontent
+				headline : req.body.headline,
+				newsUrl : req.body.newsUrl,
+				bodyText : req.body.bodyText
 			};
 
-			console.log("new ship log");
-			console.log(logData);
+			console.log("new news!");
+			console.log(news);
 
-			astronaut.shiplogs.push(logData);
-			astronaut.save(function(err){
+			main.newsArticles.push(news);
+			main.save(function(err){
 				if (err) {
 					console.error(err);
 					res.send(err.message);
 				}
 			});
 
-			res.redirect('/astronauts/' + astro_id);
+			res.redirect('/main/' + main_id);
 
 
 		} else {
 
-			// unable to find astronaut, return 404
-			console.error("unable to find astronaut: " + astro_id);
+			// unable to find article, return 404
+			console.error("unable to find main: " + main_id);
 			return res.status(404).render('404.html');
 		}
 	})
 }
 
-exports.deleteAstro = function(req,res) {
+//post tweet
+exports.postTweet = function(req, res) {
+
+	// Get articles from URL params
+	var main_id = req.params.main_id;
+
+	// query database for article
+	normandyModel.findOne({slug:main_id}, function(err, main){
+
+		if (err) {
+			console.error("ERROR");
+			console.error(err);
+			res.send("There was an error querying for "+ main_id).status(500);
+		}
+
+		if (main != null) {
+
+			// found the article
+
+			// concatenate submitted date field + time field
+			var datetimestr = req.body.logdate + " " + req.body.logtime;
+
+			console.log(datetimestr);
+			
+			// add a new tweet
+			var tweet = {
+				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+				tweetname : req.body.tweetname,
+				embedLine : req.body.embedLine,
+			};
+
+			console.log("new tweet");
+			console.log(tweet);
+
+			main.tweets.push(tweet);
+			main.save(function(err){
+				if (err) {
+					console.error(err);
+					res.send(err.message);
+				}
+			});
+
+			res.redirect('/main/' + main_id);
+
+
+		} else {
+
+			// unable to find article, return 404
+			console.error("unable to find main: " + main_id);
+			return res.status(404).render('404.html');
+		}
+	})
+}
+
+
+//post user
+exports.userPost = function(req, res) {
+
+	// Get articles from URL params
+	var main_id = req.params.main_id;
+
+	// query database for article
+	normandyModel.findOne({slug:main_id}, function(err, main){
+
+		if (err) {
+			console.error("ERROR");
+			console.error(err);
+			res.send("There was an error querying for "+ main_id).status(500);
+		}
+
+		if (main != null) {
+
+			// found the article
+
+			// concatenate submitted date field + time field
+			var datetimestr = req.body.logdate + " " + req.body.logtime;
+
+			console.log(datetimestr);
+			
+			// add a new tweet
+			var user = {
+				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+				userName : req.body.username,
+				userText : req.body.userText
+			};
+
+			console.log("new tweet");
+			console.log(tweet);
+
+			main.tweets.push(tweet);
+			main.save(function(err){
+				if (err) {
+					console.error(err);
+					res.send(err.message);
+				}
+			});
+
+			res.redirect('/main/' + main_id);
+
+
+		} else {
+
+			// unable to find article, return 404
+			console.error("unable to find main: " + main_id);
+			return res.status(404).render('404.html');
+		}
+	})
+}
+
+
+exports.deleteMain = function(req,res) {
 
 	// Get astronaut from URL params
-	var astro_id = req.params.astro_id;
+	var main_id = req.params.main_id;
 
 	// if querystring has confirm=yes, delete record
 	// else display the confirm page
 
 	if (req.query.confirm == 'yes')  {
 	
-		normandyModel.remove({slug:astro_id}, function(err){
+		normandyModel.remove({slug:main_id}, function(err){
 			if (err){ 
 				console.error(err);
-				res.send("Error when trying to remove astronaut: "+ astro_id);
+				res.send("Error when trying to remove main: "+ main_id);
 			}
 
-			res.send("Removed astronaut. <a href='/'>Back to home</a>.");
+			res.send("Removed article. <a href='/'>Back to home</a>.");
 		});
 
 	} else {
-		//query astronaut and display confirm page
-		normandyModel.findOne({slug:astro_id}, function(err, astronaut){
+		//query main article and display confirm page
+		normandyModel.findOne({slug:main_id}, function(err, main){
 
 			if (err) {
 				console.error("ERROR");
 				console.error(err);
-				res.send("There was an error querying for "+ astro_id).status(500);
+				res.send("There was an error querying for "+ main_id).status(500);
 			}
 
-			if (astronaut != null) {
+			if (main != null) {
 
 				var templateData = {
-					astro : astronaut
+					main : mains
 				};
 				
 				res.render('delete_confirm.html', templateData);

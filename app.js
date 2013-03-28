@@ -75,12 +75,14 @@ app.post('/main/:main_id/edit', routes.updateMain); //POST update database
 // delete main
 app.get('/main/:main_id/delete', routes.deleteMain);
 
-// add ship's log
-app.post('/main/:main_id/addshiplog', routes.postShipLog);
-
 // add a tweet
+app.post('/main/:main_id/addtweet', routes.postTweet);
 
 // add a news article
+app.post('main/:main_id/addnews', routes.postNews);
+
+//add a user post
+app.post('main/:main_id/addpost', routes.userPost);
 
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){

@@ -13,44 +13,36 @@ var nameValidation = function(val) {
 	}
 }
 
-// tweets
+//tweets
 var tweetSchema = new Schema({
-	username : { String,required: true },
+	tweetname : { String,required: true },
 	timePost: String,
-	verifiedAccount: Boolean,
-	embedLine : String,
+	VerifiedAccount: Boolean,
+	embedLine : String
 })
 
-// related tweets
-var relatedTweets = new Schema({
-	tweets : [tweetSchema],
-	
-})
-
-// news articles
+//news articles
 var newsArts = new Schema({
 	headline : String,
 	newsUrl : { String, required : true },
 	bodyText : String,
-	newstimePosted : String,
+	newstimePosted : String   
 })
 
-// related news articles
-var relnewsArticles = new Schema ({
-	relnewsArts : [newsArts],
+var userPost = new Schema ({
+	userName : String,
+	userText : String
+	
 })
 
 // define main article schema
 var normandySchema = new Schema({
-	slug : {type: String, lowercase: true, required: true, unique: true },
-	mainHeadline : String, 
-	userPost : {
-		userName : String,
-		userText : String,
-	},
-	relatednewsArts : [newsArts],
-	relatedTweets : [tweetSchema],
-    lastupdated : { type: Date, default: Date.now }
+	slug : { type: String, lowercase: true, required: true, unique: true },
+	mainHeadline : { type: String, required : true }, 
+	userPosts : [userPost],
+	lastupdated : { type: Date, default: Date.now },
+	tweets :[tweetShema],
+	newsArticles : [newsArts]
 });
 
 
