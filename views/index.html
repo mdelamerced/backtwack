@@ -4,22 +4,22 @@
 
 		<h1>ExpressJS + Templates Demo</h1>
 		
-		<img src="http://i.imgur.com/ASfCs.gif" alt="Space shuttle animated gif crossing an LA highway">
+		<!--<img src="http://i.imgur.com/ASfCs.gif" alt="Space shuttle animated gif crossing an LA highway"> -->
 		
 		<hr>
 
 		<h3>{{pageTitle}}</h3>
 
 		<!-- astronaut loop -->
-		{{#astros}}
+		{{#mains}}
 		
-		<li><a href="/astronauts/{{slug}}">{{name}}</a> - {{source.name}}</li>
+		<li><a href="/main/{{slug}}">{{mainHeadline}}</a> - {{source.mainHeadline}}</li>
 		
-		{{/astros}}
+		{{/mains}}
 
 		<hr>
 		<p>
-			<a href="/create">Create a new astronaut</a>
+			<a href="/create">Create a new article</a>
 		</p>
 	</div>
 

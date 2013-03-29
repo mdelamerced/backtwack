@@ -15,7 +15,7 @@ var nameValidation = function(val) {
 
 //tweets
 var tweetSchema = new Schema({
-	tweetname : { String,required: true },
+	tweetname : { type: String, required: true },
 	timePost: String,
 	VerifiedAccount: Boolean,
 	embedLine : String
@@ -24,7 +24,7 @@ var tweetSchema = new Schema({
 //news articles
 var newsArts = new Schema({
 	headline : String,
-	newsUrl : { String, required : true },
+	newsUrl : { type: String, required : true },
 	bodyText : String,
 	newstimePosted : String   
 })
@@ -41,7 +41,7 @@ var normandySchema = new Schema({
 	mainHeadline : { type: String, required : true }, 
 	userPosts : [userPost],
 	lastupdated : { type: Date, default: Date.now },
-	tweets :[tweetShema],
+	tweets :[tweetSchema],
 	newsArticles : [newsArts]
 });
 
