@@ -4,6 +4,8 @@
  * 
  * Routes contains the functions (callbacks) associated with request urls.
  */
+ 
+var request = require('request'); // library to request urls
 
 var moment = require("moment"); // date manipulation library
 var normandyModel = require("../models/normandy.js"); //db model
@@ -16,24 +18,24 @@ exports.index = function(req, res) {
 	
 	console.log("main page requested");
 
-	// query for all astronauts
+	// query for all articles
 	// .find will accept 3 arguments
 	// 1) an object for filtering {} (empty here)
 	// 2) a string of properties to be return, 'name slug source' will return only the name, slug and source returned main articles
 	// 3) callback function with (err, results)
 	//    err will include any error that occurred
-	//	  allAstros is our resulting array of astronauts
-	normandyModel.find({}, 'name slug source', function(err, allMains){
+	//	  allMains is our resulting array of articles
+	normandyModel.find({}, 'mainHeadline slug lastupdated', function(err, allMain){
 
 		if (err) {
 			res.send("Unable to query database for articles").status(500);
 		};
 
-		console.log("retrieved " + allMains.length + " articles from database");
+		console.log("retrieved " + allMain.length + " articles from database");
 
 		var templateData = {
-			mains : allMains,
-			pageTitle : "Main articles (" + allMains.length + ")"
+			maines : allMain,
+			pageTitle : "Main articles (" + allMain.length + ")"
 		}
 
 		res.render('index.html', templateData);
@@ -51,7 +53,7 @@ exports.detail = function(req, res) {
 	//get the requested main by the param on the url :astro_id
 	var main_id = req.params.main_id;
 
-	// query the database for astronaut
+	// query the database for articles
 	var mainQuery = normandyModel.findOne({slug:main_id});
 	mainQuery.exec(function(err, currentMain){
 
@@ -74,14 +76,14 @@ exports.detail = function(req, res) {
         };
 		*/
 		//query for all astronauts, return only name and slug
-		normandyModel.find({}, 'name slug', function(err, allMain){
+		normandyModel.find({}, 'mainHeadline slug', function(err, allMain){
 
 			console.log("retrieved all articles : " + allMain.length);
 
 			//prepare template data for view
 			var templateData = {
 				main : currentMain,
-				mains : allMain,
+				maines : allMain,
 				pageTitle : currentMain.mainHeadline
 			}
 
@@ -139,7 +141,7 @@ exports.createMain = function(req, res) {
 			};
 
 			res.render('create_form.html', templateData);
-			// return res.send("There was an error when creating a new astronaut");
+			// return res.send("There was an error when creating a new article");
 
 		} else {
 			console.log("Created a new article!");
@@ -156,7 +158,7 @@ exports.editMainForm = function(req, res) {
 	// Get astronaut from URL params
 	var main_id = req.params.main_id;
 	var mainQuery = normandyModel.findOne({slug:main_id});
-	mainQuery.exec(function(err, main){
+	mainQuery.exec(function(err, mains){
 
 		if (err) {
 			console.error("ERROR");
@@ -164,7 +166,7 @@ exports.editMainForm = function(req, res) {
 			res.send("There was an error querying for "+ main_id).status(500);
 		}
 
-		if (main != null) {
+		if (mains != null) {
 
 			// birthdateForm function for edit form
 			// html input type=date needs YYYY-MM-DD format
@@ -246,7 +248,7 @@ exports.postNews = function(req, res) {
 			
 			// add a new tweet
 			var news = {
-				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
 				headline : req.body.headline,
 				newsUrl : req.body.newsUrl,
 				bodyText : req.body.bodyText
@@ -301,7 +303,7 @@ exports.postTweet = function(req, res) {
 			
 			// add a new tweet
 			var tweet = {
-				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
 				tweetname : req.body.tweetname,
 				embedLine : req.body.embedLine,
 			};
@@ -331,7 +333,7 @@ exports.postTweet = function(req, res) {
 
 
 //post user
-exports.userPost = function(req, res) {
+exports.postUser = function(req, res) {
 
 	// Get articles from URL params
 	var main_id = req.params.main_id;
@@ -350,21 +352,21 @@ exports.userPost = function(req, res) {
 			// found the article
 
 			// concatenate submitted date field + time field
-			var datetimestr = req.body.logdate + " " + req.body.logtime;
+			//var datetimestr = req.body.logdate + " " + req.body.logtime;
 
-			console.log(datetimestr);
+			//console.log(datetimestr);
 			
-			// add a new tweet
-			var user = {
+			// add a new post
+			var uPost = {
 				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
-				userName : req.body.username,
-				userText : req.body.userText
+				userName : req.body.uName,
+				userText : req.body.uText
 			};
 
-			console.log("new tweet");
-			console.log(tweet);
+			console.log("new user post");
+			console.log(uPost);
 
-			main.tweets.push(tweet);
+			main.userPosts.push(uPost);
 			main.save(function(err){
 				if (err) {
 					console.error(err);
@@ -406,7 +408,7 @@ exports.deleteMain = function(req,res) {
 
 	} else {
 		//query main article and display confirm page
-		normandyModel.findOne({slug:main_id}, function(err, main){
+		normandyModel.findOne({slug:main_id}, function(err, mains){
 
 			if (err) {
 				console.error("ERROR");
@@ -414,7 +416,7 @@ exports.deleteMain = function(req,res) {
 				res.send("There was an error querying for "+ main_id).status(500);
 			}
 
-			if (main != null) {
+			if (mains != null) {
 
 				var templateData = {
 					main : mains
@@ -424,8 +426,55 @@ exports.deleteMain = function(req,res) {
 			
 			}
 		})
-
 	}
-
-
 }
+
+// exporting data to JSON
+exports.data_all = function(req, res) {
+
+    // query for all articles
+    mainQuery = normandyModel.find({}); // query for all articles
+    mainQuery.sort('-lastupdated');
+    mainQuery.exec(function(err, allMains){
+
+        // prepare data for JSON
+        var jsonData = {
+            status : 'OK',
+            mains : allMains
+        }
+
+        // send JSON to requestor
+        res.json(jsonData);
+    });
+}
+
+// requesting data from remote JSON location
+exports.remote_api = function(req, res) {
+
+    var remote_api_url = 'http://itpdwdexpresstemplates.herokuapp.com/data/astronauts';
+    // var remote_api_url = 'http://localhost:5000/data/astronauts';
+
+    // make a request to remote_api_url
+    request.get(remote_api_url, function(error, response, data){
+
+        if (error){
+            res.send("There was an error requesting remote api url.");
+        }
+
+        // convert data JSON string to native JS object
+        var apiData = JSON.parse(data);
+
+        // if apiData has property 'status == OK' then successful api request
+        if (apiData.status == 'OK') {
+
+            // prepare template data for remote_api_demo.html template
+            var templateData = {
+                astronauts : apiData.astros,
+                rawJSON : data, 
+                remote_url : remote_api_url
+            }
+
+            return res.render('remote_api_demo.html', templateData);
+        }   
+    })
+};

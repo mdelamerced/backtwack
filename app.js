@@ -82,7 +82,7 @@ app.post('/main/:main_id/addtweet', routes.postTweet);
 app.post('main/:main_id/addnews', routes.postNews);
 
 //add a user post
-app.post('main/:main_id/addpost', routes.userPost);
+app.post('main/:main_id/addpost', routes.postUser);
 
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){

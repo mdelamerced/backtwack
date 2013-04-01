@@ -18,20 +18,22 @@ var tweetSchema = new Schema({
 	tweetname : { type: String, required: true },
 	timePost: String,
 	VerifiedAccount: Boolean,
-	embedLine : String
+	embedLine : String,
+	tweetText: String
 })
 
 //news articles
-var newsArts = new Schema({
+var newsArtsSchema = new Schema({
 	headline : String,
 	newsUrl : { type: String, required : true },
 	bodyText : String,
 	newstimePosted : String   
 })
 
-var userPost = new Schema ({
+var userPostSchema = new Schema ({
 	userName : String,
-	userText : String
+	userText : String,
+	date : String
 	
 })
 
@@ -39,10 +41,10 @@ var userPost = new Schema ({
 var normandySchema = new Schema({
 	slug : { type: String, lowercase: true, required: true, unique: true },
 	mainHeadline : { type: String, required : true }, 
-	userPosts : [userPost],
+	userPosts : [userPostSchema],
 	lastupdated : { type: Date, default: Date.now },
 	tweets :[tweetSchema],
-	newsArticles : [newsArts]
+	newsArticles : [newsArtsSchema]
 });
 
 
