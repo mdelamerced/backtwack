@@ -2,13 +2,73 @@
 	
 	
 	<!-- first column w/ details-->
-	<div class="span4">
+	<div class="span5">
 		<h2>{{main.mainHeadline}}</h2>
 		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
-	<div>
 		
 		<hr>
-		<h3>User Posts</h3>
+		<h3>News feed</h3>
+		{{#main.newsArticles}}
+			<br>
+		{{/main.newsArticles}}
+		
+		{{^main.newsArticles}}No News Articles {{/main.newsArticles}}	
+	</div>
+		
+		
+	<!-- second column w/ tweets-->
+	<div class="span4">
+	<hr>
+		<h3>Twitter feed</h3>
+		{{#main.tweets}}
+			<br>
+			
+			<blockquote class="twitter-tweet"><p>
+			<a href= "{{embedLine}}" ></blockquote>
+			
+			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<hr>
+		{{/main.tweets}}
+
+		{{^main.tweets}}No tweets{{/main.tweets}}
+
+		<a href="#myModal2" role="button" class="btn" data-toggle="modal">Add Tweet</a>
+<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <h3 id="myModalLabel">Add tweet</h3>
+		  	</div>
+		  	<div class="modal-body">
+				<form method="POST" action="/main/{{main.slug}}/addtweet"  id="tweet">
+					<legend>Add tweet</legend>
+					<div>
+						<label for="embedLine">Tweet URL</label>
+						<textarea  id="embedLine" name="embedLine" required></textarea>
+					</div>
+
+					<input type="submit" value="Add Tweet" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- third column w/ listings -->
+	<div class="span3">
+		<h3>Available Headlines</h3>
+		
+		{{#maines}}
+		<li>
+			<a href="/main/{{slug}}">{{mainHeadline}}</a>
+		</li>
+		{{/maines}}
+
+		<br>
+		<a href="/create">Add a new headline</a>
+	
+	<hr>
+	
+	<h3>User Posts</h3>
 		{{#main.userPosts}}
 			<i>{{userName}}</i><br>
 			<p>{{userText}}</p>
@@ -41,57 +101,8 @@
 					<input type="submit" value="Add More" class="btn btn-primary">
 				</form>
 			</div>
-
-		</div>
-	</div>
-</div>
-
-	<!-- second column w/ tweets-->
-	<div class="span4">
-	<hr>
-		<h3>Twitter feed</h3>
-		{{#main.tweets}}
-			<a>{{embedLine}}</a><br>
-			<hr>
-		{{/main.tweets}}
-
-		{{^main.tweets}}No tweets{{/main.tweets}}
-
-		<a href="#myModal2" role="button" class="btn" data-toggle="modal">Add Tweet</a>
-<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-			<div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			    <h3 id="myModalLabel">Add tweet</h3>
-		  	</div>
-		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addtweet"  id="tweet">
-					<legend>Add tweet</legend>
-					<div>
-						<label for="embedLine">embed tweet</label>
-						<textarea  id="embedLine" name="embedLine" required></textarea>
-					</div>
-
-					<input type="submit" value="Add Tweet" class="btn btn-primary">
-				</form>
-			</div>
-
 		</div>
 	</div>
 
 
-	
-	<!-- third column w/ listings -->
-	<div class="span2">
-		<h3>Available Headlines</h3>
-		<hr>
-		{{#maines}}
-		<li>
-			<a href="/main/{{slug}}">{{mainHeadline}}</a>
-		</li>
-		{{/maines}}
 
-		<br>
-		<a href="/create">Add a new headline</a>
-	</div>
-</div>
