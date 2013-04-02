@@ -7,6 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
+var Twit = require('twit');
 
 // the ExpressJS App
 var app = express();

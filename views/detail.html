@@ -1,23 +1,10 @@
 <div class="row">
 	
-	<!-- first column w/ image-->
-	<div class="span4">
-		<img src="{{main.photo}}" alt="photo of astronaut {{astro.name}}" class="img-polaroid" width="320px"><br>
-		
-		source: 
-		<a href="{{main.source.url}}" class="small">
-			{{astro.source.name}}
-		</a>
-
-	</div>
 	
-	<!-- second column w/ details-->
+	<!-- first column w/ details-->
 	<div class="span4">
 		<h2>{{main.mainHeadline}}</h2>
-		<hr>
-		<br><br>
-		<a href="/main/{{main.slug}}/edit" class="btn btn-info">edit</a>
-
+		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
 	<div>
 		
 		<hr>
@@ -28,7 +15,7 @@
 			<hr>
 		{{/main.userPosts}}
 
-		{{^main.userPosts}}No logs{{/main.userPosts}}
+		{{^main.userPosts}}No posts{{/main.userPosts}}
 
 		<a href="#myModal" role="button" class="btn" data-toggle="modal">Add More</a>
 
@@ -39,7 +26,7 @@
 			    <h3 id="myModalLabel">Add to this</h3>
 		  	</div>
 		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addPost"  id="userPostForm">
+				<form method="POST" action="/main/{{main.slug}}/addPost"  id="uPost">
 					<legend>Add More</legend>
 					<div>
 						<label for="uName">Username</label>
@@ -50,15 +37,50 @@
 						<label for="uText">Text</label>
 						<textarea name="uText" id="uText" required></textarea>
 					</div>
-
-					<input type="submit" value="Add" class="btn btn-primary">
+				
+					<input type="submit" value="Add More" class="btn btn-primary">
 				</form>
 			</div>
 
 		</div>
 	</div>
+</div>
+
+	<!-- second column w/ tweets-->
+	<div class="span4">
+	<hr>
+		<h3>Twitter feed</h3>
+		{{#main.tweets}}
+			<a>{{embedLine}}</a><br>
+			<hr>
+		{{/main.tweets}}
+
+		{{^main.tweets}}No tweets{{/main.tweets}}
+
+		<a href="#myModal2" role="button" class="btn" data-toggle="modal">Add Tweet</a>
+<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <h3 id="myModalLabel">Add tweet</h3>
+		  	</div>
+		  	<div class="modal-body">
+				<form method="POST" action="/main/{{main.slug}}/addtweet"  id="tweet">
+					<legend>Add tweet</legend>
+					<div>
+						<label for="embedLine">embed tweet</label>
+						<textarea  id="embedLine" name="embedLine" required></textarea>
+					</div>
+
+					<input type="submit" value="Add Tweet" class="btn btn-primary">
+				</form>
+			</div>
+
+		</div>
 	</div>
 
+
+	
 	<!-- third column w/ listings -->
 	<div class="span2">
 		<h3>Available Headlines</h3>
@@ -72,5 +94,4 @@
 		<br>
 		<a href="/create">Add a new headline</a>
 	</div>
-
 </div>

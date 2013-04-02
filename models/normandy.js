@@ -15,10 +15,10 @@ var nameValidation = function(val) {
 
 //tweets
 var tweetSchema = new Schema({
-	tweetname : { type: String, required: true },
+	tweetname : String,
 	timePost: String,
 	VerifiedAccount: Boolean,
-	embedLine : String,
+	embedLine : { type: String, required: true },
 	tweetText: String
 })
 
@@ -30,6 +30,7 @@ var newsArtsSchema = new Schema({
 	newstimePosted : String   
 })
 
+// user posts
 var userPostSchema = new Schema ({
 	userName : String,
 	userText : String,
