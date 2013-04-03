@@ -42,6 +42,8 @@ var userPostSchema = new Schema ({
 var normandySchema = new Schema({
 	slug : { type: String, lowercase: true, required: true, unique: true },
 	mainHeadline : { type: String, required : true }, 
+	mainDescription : String,
+	imageLink : String,
 	userPosts : [userPostSchema],
 	lastupdated : { type: Date, default: Date.now },
 	tweets :[tweetSchema],

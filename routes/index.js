@@ -120,6 +120,8 @@ exports.createMain = function(req, res) {
 	// accept form post data
 	var newMain = new normandyModel({
 		mainHeadline : req.body.mainHeadline,
+		mainDescription : req.body.mainDescription,
+		imageLink : req.body.imageLink,
 		slug : req.body.mainHeadline.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
 
 	});
@@ -199,7 +201,9 @@ exports.updateMain = function(req, res) {
 
 	// prepare form data
 	var updatedData = {
-		mainHeadline : req.body.mainHeadline,		
+		mainHeadline : req.body.mainHeadline,
+		mainDescription : req.body.mainDescription,
+		imageLink : req.body.imageLink,		
 	}
 
 	// query for article
@@ -299,9 +303,9 @@ exports.postNews = function(req, res) {
 			// found the article
 
 			// concatenate submitted date field + time field
-			var datetimestr = req.body.logdate + " " + req.body.logtime;
+			//var datetimestr = req.body.logdate + " " + req.body.logtime;
 
-			console.log(datetimestr);
+		//	console.log(datetimestr);
 			
 			// add a new tweet
 			var news = {
