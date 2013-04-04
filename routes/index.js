@@ -122,15 +122,19 @@ exports.createMain = function(req, res) {
 		mainHeadline : req.body.mainHeadline,
 		mainDescription : req.body.mainDescription,
 		imageLink : req.body.imageLink,
+		googledNews : req.body.googledNews,
+		publicTweet : req.body.publicTweet,
+		searchGovt : req.body.searchGovt,
 		slug : req.body.mainHeadline.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
 
 	});
-	// boolean checkbox
-/*	if (req.body.walkedonmoon) {
-		newAstro.walkedOnMoon = true;
-	}
-	*/
-	// save the newAstro to the database
+	
+	newMain.googledNews = req.body.googledNews.split("+");
+	newMain.publicTweet = req.body.publicTweet.split("+");
+	newMain.searchGovt = req.body.searchGovt.split("+");
+	newMain.imageLink = req.body.imageLink.split(",");
+	
+	// save the newMainto the database
 	newMain.save(function(err){
 		if (err) {
 			console.error("Error on saving new article");
@@ -203,7 +207,10 @@ exports.updateMain = function(req, res) {
 	var updatedData = {
 		mainHeadline : req.body.mainHeadline,
 		mainDescription : req.body.mainDescription,
-		imageLink : req.body.imageLink,		
+		imageLink : req.body.imageLink.split(","),
+		googledNews : req.body.googledNews.split("+"),
+		publicTweet : req.body.publicTweet.split("+"),
+		searchGovt : req.body.searchGovt.split("+")	
 	}
 
 	// query for article
@@ -247,13 +254,13 @@ exports.postUser = function(req, res) {
 			// found the article
 
 			// concatenate submitted date field + time field
-			//var datetimestr = req.body.logdate + " " + req.body.logtime;
+			var datetimestr = req.body.logdate + " " + req.body.logtime;
 
-			//console.log(datetimestr);
+			console.log(datetimestr);
 			
 			// add a new post
 			var uPost = {
-				//date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
 				userName : req.body.uName,
 				userText : req.body.uText
 			};
@@ -280,119 +287,6 @@ exports.postUser = function(req, res) {
 		}
 	})
 }
-
-
-
-//post new tweet embed
-exports.postNews = function(req, res) {
-
-	// Get astronaut from URL params
-	var main_id = req.params.main_id;
-
-	// query database for article
-	normandyModel.findOne({slug:main_id}, function(err, main){
-
-		if (err) {
-			console.error("ERROR");
-			console.error(err);
-			res.send("There was an error querying for "+ main_id).status(500);
-		}
-
-		if (main != null) {
-
-			// found the article
-
-			// concatenate submitted date field + time field
-			//var datetimestr = req.body.logdate + " " + req.body.logtime;
-
-		//	console.log(datetimestr);
-			
-			// add a new tweet
-			var news = {
-			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
-				headline : req.body.headline,
-				newsUrl : req.body.newsUrl,
-				bodyText : req.body.bodyText
-			};
-
-			console.log("new news!");
-			console.log(news);
-
-			main.newsArticles.push(news);
-			main.save(function(err){
-				if (err) {
-					console.error(err);
-					res.send(err.message);
-				}
-			});
-
-			res.redirect('/main/' + main_id);
-
-
-		} else {
-
-			// unable to find article, return 404
-			console.error("unable to find main: " + main_id);
-			return res.status(404).render('404.html');
-		}
-	})
-}
-
-//post tweet
-exports.postTweet = function(req, res) {
-
-	// Get articles from URL params
-	var main_id = req.params.main_id;
-
-	// query database for article
-	normandyModel.findOne({slug:main_id}, function(err, main){
-
-		if (err) {
-			console.error("ERROR");
-			console.error(err);
-			res.send("There was an error querying for "+ main_id).status(500);
-		}
-
-		if (main != null) {
-
-			// found the article
-
-			// concatenate submitted date field + time field
-			//var datetimestr = req.body.logdate + " " + req.body.logtime;
-
-		//	console.log(datetimestr);
-			
-			// add a new tweet
-			var tweet = {
-			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
-				tweetname : req.body.tweetname,
-				embedLine : req.body.embedLine,
-				text : req.body.tweettext
-			};
-
-			console.log("new tweet");
-			console.log(tweet);
-
-			main.tweets.push(tweet);
-			main.save(function(err){
-				if (err) {
-					console.error(err);
-					res.send(err.message);
-				}
-			});
-
-			res.redirect('/main/' + main_id);
-
-
-		} else {
-
-			// unable to find article, return 404
-			console.error("unable to find main: " + main_id);
-			return res.status(404).render('404.html');
-		}
-	})
-}
-
 
 exports.deleteMain = function(req,res) {
 

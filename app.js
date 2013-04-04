@@ -76,12 +76,6 @@ app.post('/main/:main_id/edit', routes.updateMain); //POST update database
 // delete main
 app.get('/main/:main_id/delete', routes.deleteMain);
 
-// add a tweet
-app.post('/main/:main_id/addtweet', routes.postTweet);
-
-// add a news article
-app.post('main/:main_id/addnews', routes.postNews);
-
 //add a user post
 app.post('main/:main_id/addpost', routes.postUser);
 

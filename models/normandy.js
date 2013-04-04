@@ -13,28 +13,11 @@ var nameValidation = function(val) {
 	}
 }
 
-//tweets
-var tweetSchema = new Schema({
-	tweetname : String,
-	timePost: String,
-	VerifiedAccount: Boolean,
-	embedLine : { type: String, required: true },
-	tweetText: String
-})
-
-//news articles
-var newsArtsSchema = new Schema({
-	headline : String,
-	newsUrl : { type: String, required : true },
-	bodyText : String,
-	newstimePosted : String   
-})
-
 // user posts
 var userPostSchema = new Schema ({
-	userName : String,
+	userName : { type: String, required :true },
 	userText : String,
-	date : String
+	date : Date
 	
 })
 
@@ -43,11 +26,12 @@ var normandySchema = new Schema({
 	slug : { type: String, lowercase: true, required: true, unique: true },
 	mainHeadline : { type: String, required : true }, 
 	mainDescription : String,
-	imageLink : String,
-	userPosts : [userPostSchema],
+	imageLink : [String],
 	lastupdated : { type: Date, default: Date.now },
-	tweets :[tweetSchema],
-	newsArticles : [newsArtsSchema]
+	googledNews =[String],
+	publicTweet =[String],
+	searchGovt : [String],
+	userPosts : [userPostSchema]
 });
 
 

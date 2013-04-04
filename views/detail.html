@@ -4,17 +4,45 @@
 	<!-- first column w/ details-->
 	<div class="span5">
 		<h2>{{main.mainHeadline}}</h2>
-		
-		<p>Description: {{main.mainDescription}}</p>
+		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
+		<p>{{main.mainDescription}}</p>
 		
 		<img src="{{main.imageLink}}" class= "img-polaroid" width="320px">
 
-		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
-		
 		<hr>
 		<h3>News feed</h3>
+		
+		<a href="#myModal3" role="button" class="btn" data-toggle="modal">Add News Article</a>
+		<div id="myModal3" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			    <h3 id="myModalLabel">Add news article</h3>
+		  	</div>
+		  	<div class="modal-body">
+				<form method="POST" action="/main/{{main.slug}}/addnews"  id="news">
+					<legend>Add news article</legend>
+					<div>
+						<label for="headline">Headline</label>
+						<input id="headline" name="headline" required></input>
+					</div>
+					
+					<div>
+						<label for="newsUrl">News URL</label>
+						<input  id="newsUrl" name="newsUrl" required></input>
+					</div>
+					
+					<div>
+						<label for="bodyText">Text</label>
+						<textarea id="bodyText" name="bodyText" required></textarea>
+					</div>
+
+					<input type="submit" value="Add it" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
 		{{#main.newsArticles}}
-			<br>
+		<br>
 		{{/main.newsArticles}}
 		
 		{{^main.newsArticles}}No News Articles {{/main.newsArticles}}	
@@ -88,11 +116,11 @@
 		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
 			<div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 			    <h3 id="myModalLabel">Add to this</h3>
 		  	</div>
 		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addPost"  id="userPost">
+				<form method="POST" action="/main/{{main.slug}}/addpost"  id="uPost">
 					<legend>Add More</legend>
 					<div>
 						<label for="uName">Username</label>
