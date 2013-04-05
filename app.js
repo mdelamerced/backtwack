@@ -79,6 +79,13 @@ app.get('/main/:main_id/delete', routes.deleteMain);
 //add a user post
 app.post('main/:main_id/addpost', routes.postUser);
 
+// API JSON Data routes
+app.get('/data/main',routes.data_all);
+app.get('/data/main/:main_id', routes.data_detail);
+
+// consume a remote API
+app.get('/remote_api_demo', routes.remote_api);
+
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

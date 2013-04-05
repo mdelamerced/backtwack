@@ -233,8 +233,7 @@ exports.updateMain = function(req, res) {
 	})
 }
 
-
-//post user
+// user post comments
 exports.postUser = function(req, res) {
 
 	// Get articles from URL params
@@ -254,21 +253,21 @@ exports.postUser = function(req, res) {
 			// found the article
 
 			// concatenate submitted date field + time field
-			var datetimestr = req.body.logdate + " " + req.body.logtime;
+			//var datetimestr = req.body.logdate + " " + req.body.logtime;
 
-			console.log(datetimestr);
+			//console.log(datetimestr);
 			
 			// add a new post
-			var uPost = {
-				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+			var addPost = {
+			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
 				userName : req.body.uName,
 				userText : req.body.uText
 			};
 
 			console.log("new user post");
-			console.log(uPost);
+			console.log(addPost);
 
-			main.userPosts.push(uPost);
+			main.userPosts.push(addPost);
 			main.save(function(err){
 				if (err) {
 					console.error(err);
@@ -352,8 +351,8 @@ exports.data_all = function(req, res) {
 // requesting data from remote JSON location
 exports.remote_api = function(req, res) {
 
-    var remote_api_url = 'http://itpdwdexpresstemplates.herokuapp.com/data/astronauts';
-    // var remote_api_url = 'http://localhost:5000/data/astronauts';
+    //var remote_api_url = 'http://backtwack.herokuapp.com/data/main';
+    var remote_api_url = 'http://localhost:5000/data/main';
 
     // make a request to remote_api_url
     request.get(remote_api_url, function(error, response, data){
@@ -370,7 +369,7 @@ exports.remote_api = function(req, res) {
 
             // prepare template data for remote_api_demo.html template
             var templateData = {
-                astronauts : apiData.astros,
+                main : apiData.mains,
                 rawJSON : data, 
                 remote_url : remote_api_url
             }

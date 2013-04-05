@@ -28,8 +28,8 @@ var normandySchema = new Schema({
 	mainDescription : String,
 	imageLink : [String],
 	lastupdated : { type: Date, default: Date.now },
-	googledNews =[String],
-	publicTweet =[String],
+	googledNews :[String],
+	publicTweet :[String],
 	searchGovt : [String],
 	userPosts : [userPostSchema]
 });

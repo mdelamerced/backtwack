@@ -12,36 +12,7 @@
 		<hr>
 		<h3>News feed</h3>
 		
-		<a href="#myModal3" role="button" class="btn" data-toggle="modal">Add News Article</a>
-		<div id="myModal3" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-			<div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-			    <h3 id="myModalLabel">Add news article</h3>
-		  	</div>
-		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addnews"  id="news">
-					<legend>Add news article</legend>
-					<div>
-						<label for="headline">Headline</label>
-						<input id="headline" name="headline" required></input>
-					</div>
-					
-					<div>
-						<label for="newsUrl">News URL</label>
-						<input  id="newsUrl" name="newsUrl" required></input>
-					</div>
-					
-					<div>
-						<label for="bodyText">Text</label>
-						<textarea id="bodyText" name="bodyText" required></textarea>
-					</div>
-
-					<input type="submit" value="Add it" class="btn btn-primary">
-				</form>
-			</div>
-		</div>
-		{{#main.newsArticles}}
+				{{#main.newsArticles}}
 		<br>
 		{{/main.newsArticles}}
 		
@@ -55,27 +26,7 @@
 	<hr>
 		<h3>Twitter feed</h3>
 		
-		<a href="#myModal2" role="button" class="btn" data-toggle="modal">Add Tweet</a>
-		<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-			<div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			    <h3 id="myModalLabel">Add tweet</h3>
-		  	</div>
-		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addtweet"  id="tweet">
-					<legend>Add tweet</legend>
-					<div>
-						<label for="embedLine">Tweet URL</label>
-						<textarea  id="embedLine" name="embedLine" required></textarea>
-					</div>
-
-					<input type="submit" value="Add Tweet" class="btn btn-primary">
-				</form>
-			</div>
-		</div>
-
-			<br>
+				<br>
 			{{#main.tweets}}
 			<blockquote class="twitter-tweet"><p>
 			<a href= "{{embedLine}}"></a></blockquote>
@@ -116,20 +67,22 @@
 		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
 			<div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 			    <h3 id="myModalLabel">Add to this</h3>
 		  	</div>
 		  	<div class="modal-body">
-				<form method="POST" action="/main/{{main.slug}}/addpost"  id="uPost">
-					<legend>Add More</legend>
+				<form method="POST" action="/main/{{main.slug}}/addpost" id="addPost">
+					<legend>Comments</legend>
 					<div>
 						<label for="uName">Username</label>
 						<input id="uName" name="uName" required></input>
+						
 					</div>
 
 					<div>
 						<label for="uText">Text</label>
 						<textarea name="uText" id="uText" required></textarea>
+						
 					</div>
 				
 					<input type="submit" value="Add More" class="btn btn-primary">

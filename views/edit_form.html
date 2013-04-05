@@ -8,9 +8,15 @@
 				Name <input type="text" name="mainHeadline" class="required" id="mainHeadline" value="{{main.mainHeadline}}" required>
 			</label>
 			
-			<label for="imageLink"> Link an image <input type="text" name="imageLink" id="imageLink"></label>
+			<label for="googledNews"> News text to search for <input type="text" name="googledNews" id="googledNews" value="{{main.googledNews}}"></label>
+
+			<label for="searchGovt">Related government search <input type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}"></label>
 			
-			<label for="mainDescription"> Write a brief description <textarea type="text" name="mainDescription" id="mainDescription"> </textarea>
+			<label for="publicTweet">Public search <input type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}"></label>
+			
+			<label for="imageLink"> Link an image <input type="text" name="imageLink" id="imageLink" value="{{main.imageLink}}"></label>
+			
+			<label for="mainDescription"> Write a brief description <textarea type="text" name="mainDescription" id="mainDescription" value="{{main.mainDescription}}"> </textarea></label>
 			
 			<input type="submit" value="Submit changes">
 
