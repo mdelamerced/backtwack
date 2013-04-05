@@ -351,8 +351,8 @@ exports.data_all = function(req, res) {
 // requesting data from remote JSON location
 exports.remote_api = function(req, res) {
 
-    //var remote_api_url = 'http://backtwack.herokuapp.com/data/main';
-    var remote_api_url = 'http://localhost:5000/data/main';
+    var remote_api_url = 'http://backtwack.herokuapp.com/data/main';
+    //var remote_api_url = 'http://localhost:5000/data/main';
 
     // make a request to remote_api_url
     request.get(remote_api_url, function(error, response, data){
