@@ -75,7 +75,7 @@ exports.detail = function(req, res) {
             return moment(this.birthdate).format("dddd, MMMM Do YYYY");
         };
 		*/
-		//query for all astronauts, return only name and slug
+		//query for all articles, return only name and slug
 		normandyModel.find({}, 'mainHeadline slug', function(err, allMain){
 
 			console.log("retrieved all articles : " + allMain.length);
@@ -249,25 +249,18 @@ exports.postUser = function(req, res) {
 		}
 
 		if (main != null) {
-
-			// found the article
-
-			// concatenate submitted date field + time field
-			//var datetimestr = req.body.logdate + " " + req.body.logtime;
-
-			//console.log(datetimestr);
 			
 			// add a new post
-			var addPost = {
+			var uPost = {
 			//	date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
-				userName : req.body.uName,
-				userText : req.body.uText
+				userName : req.body.userName,
+				userText : req.body.userText
 			};
 
 			console.log("new user post");
-			console.log(addPost);
+			console.log(uPost);
 
-			main.userPosts.push(addPost);
+			main.userPosts.push(uPost);
 			main.save(function(err){
 				if (err) {
 					console.error(err);

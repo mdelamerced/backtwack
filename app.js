@@ -9,6 +9,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var Twit = require('twit');
 
+
 // the ExpressJS App
 var app = express();
 
@@ -77,7 +78,7 @@ app.post('/main/:main_id/edit', routes.updateMain); //POST update database
 app.get('/main/:main_id/delete', routes.deleteMain);
 
 //add a user post
-app.post('main/:main_id/addpost', routes.postUser);
+app.post('/main/:main_id/addpost', routes.postUser);
 
 // API JSON Data routes
 app.get('/data/main',routes.data_all);

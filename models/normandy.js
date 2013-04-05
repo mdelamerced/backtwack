@@ -16,7 +16,7 @@ var nameValidation = function(val) {
 // user posts
 var userPostSchema = new Schema ({
 	userName : { type: String, required :true },
-	userText : String,
+	userText : { type: String, required :true },
 	date : Date
 	
 })
