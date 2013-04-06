@@ -35,7 +35,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 
-  // database - skipping until week 5
+  // database 
   app.db = mongoose.connect(process.env.MONGOLAB_URI);
   console.log("connected to database");
   
