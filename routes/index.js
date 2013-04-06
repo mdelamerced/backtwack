@@ -10,6 +10,15 @@ var request = require('request'); // library to request urls
 var moment = require("moment"); // date manipulation library
 var normandyModel = require("../models/normandy.js"); //db model
 
+var Twit = require('twit');
+
+var T = new Twit({
+    consumer_key:         'config.js'
+  , consumer_secret:      'config.js'
+  , access_token:         'config.js'
+  , access_token_secret:  'config.js'
+})
+
 
 /*
 	GET /
@@ -50,7 +59,7 @@ exports.detail = function(req, res) {
 
 	console.log("detail page requested for " + req.params.main_id);
 
-	//get the requested main by the param on the url :astro_id
+	//get the requested main by the param on the url :main_id
 	var main_id = req.params.main_id;
 
 	// query the database for articles
@@ -68,28 +77,51 @@ exports.detail = function(req, res) {
 		console.log("Found article");
 		console.log(currentMain.mainHeadline);
 
-		// formattedBirthdate function for currentAstronaut
-	/*	currentMain.formattedBirthdate = function() {
-			// formatting a JS date with moment
-			// http://momentjs.com/docs/#/displaying/format/
-            return moment(this.birthdate).format("dddd, MMMM Do YYYY");
-        };
-		*/
 		//query for all articles, return only name and slug
 		normandyModel.find({}, 'mainHeadline slug', function(err, allMain){
 
-			console.log("retrieved all articles : " + allMain.length);
+			console.log("retrieved all articles : " + allMain.length);			
+			//This uses the twit library for nodejs
+/*			
+			var tstream = T.stream('statuses/filter', { track:[currentMain.publicTweet] 
+				
+			})
+				tstream.on('tweet', function (tweet) {
+				console.log(tweet)
+			})
+*/
+			//nonAPI search request for twitter			
+			//default display twitter search with JSON
+			var twitterUrl = 'http://search.twitter.com/search.json?q=';
+    
+    //insert search paramaters
+    		var lookFor = twitterUrl + [currentMain.publicTweet]+ '&rpp=25'; 
 
+    // make a request to remote_api_url
+    		request.get(lookFor, function(error, response, data){
+
+	    		if (error){
+		    		res.send("There was an error requesting remote api.");
+		    		}
+
+        // convert data JSON string to native JS object
+        	var twitterData = JSON.parse(data);
+
+			
 			//prepare template data for view
 			var templateData = {
+				publicT : twitterData.results,
 				main : currentMain,
 				maines : allMain,
+				rawJSON : data, 
+                remote_url : lookFor,
+			//	tweet : tstream,
 				pageTitle : currentMain.mainHeadline
-			}
+			};
 
 			// render and return the template
 			res.render('detail.html', templateData);
-
+			})	
 
 		}) // end of .find (all) query
 		
@@ -97,9 +129,7 @@ exports.detail = function(req, res) {
 
 }
 
-/*
-	GET /create
-*/
+	//GET /create
 exports.mainForm = function(req, res){
 
 	var templateData = {
@@ -109,9 +139,7 @@ exports.mainForm = function(req, res){
 	res.render('create_form.html', templateData);
 }
 
-/*
-	POST /create
-*/
+	//POST /create
 exports.createMain = function(req, res) {
 	
 	console.log("received form submission");
@@ -340,34 +368,38 @@ exports.data_all = function(req, res) {
         res.json(jsonData);
     });
 }
-
+/*
 // requesting data from remote JSON location
 exports.remote_api = function(req, res) {
 
-    var remote_api_url = 'http://backtwack.herokuapp.com/data/main';
-    //var remote_api_url = 'http://localhost:5000/data/main';
+	//default display twitter search with JSON
+    var twitterUrl = 'http://search.twitter.com/search.json?q=';
+    
+    //insert search paramaters
+    var lookFor = twitterUrl + [currentMain.publicTweet]+ '&rpp=25'; 
 
     // make a request to remote_api_url
-    request.get(remote_api_url, function(error, response, data){
+    request.get(lookFor, function(error, response, data){
 
         if (error){
-            res.send("There was an error requesting remote api url.");
+            res.send("There was an error requesting remote api.");
         }
 
         // convert data JSON string to native JS object
-        var apiData = JSON.parse(data);
+        var twitterData = JSON.parse(data);
 
-        // if apiData has property 'status == OK' then successful api request
-        if (apiData.status == 'OK') {
+        // if twitterData has property 'status == OK' then successful api request
+       // if (twitterData.status == 'OK') {
 
             // prepare template data for remote_api_demo.html template
             var templateData = {
-                main : apiData.mains,
+             	main : twitterData.mains,
                 rawJSON : data, 
-                remote_url : remote_api_url
+                remote_url : lookFor
             }
 
             return res.render('remote_api_demo.html', templateData);
         }   
     })
 };
+*/

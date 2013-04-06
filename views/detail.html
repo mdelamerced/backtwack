@@ -27,15 +27,14 @@
 		<h3>Twitter feed</h3>
 		
 				<br>
-			{{#main.tweets}}
-			<blockquote class="twitter-tweet"><p>
-			<a href= "{{embedLine}}"></a></blockquote>
-			
-			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			{{#publicT}}
+				<i>{{created_at}}</i>
+				<p>{{from_user}}</p>
+				<p>{{text}}</p>
 			<hr>
-			{{/main.tweets}}
+			{{/publicT}}
 
-			{{^main.tweets}}No tweets{{/main.tweets}}
+			{{^publicT}}No tweets{{/publicT}}
 	</div>
 
 	<!-- third column w/ listings -->

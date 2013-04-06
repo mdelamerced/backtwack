@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var Twit = require('twit');
 
 
+
 // the ExpressJS App
 var app = express();
 
@@ -85,7 +86,7 @@ app.get('/data/main',routes.data_all);
 app.get('/data/main/:main_id', routes.data_detail);
 
 // consume a remote API
-app.get('/remote_api_demo', routes.remote_api);
+//app.get('/remote_api', routes.remote_api);
 
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){
