@@ -1,0 +1,67 @@
+
+<div class="row">
+		<h1>Bactwack</h1>
+		
+</div>
+ <!-- Thumbnails -->	
+<div class="row-fluid">
+	{{#maines}}	
+	<ul class="thumbnails">
+		<li class="span3">
+		<a href="/main/{{slug}}">
+		
+		<div class="thumbnail">
+			 <img data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;" src="{{imageLink}}">
+			 	<div class="caption">
+			 		<h3> {{mainHeadline}} </h3>
+			 			<p> {{mainDescription}} </p>
+			 	</div>
+		</div>
+		</a>
+		</li>
+	</ul>
+	{{/maines}}
+</div>
+
+<div class="span9">
+	{{#maines}}
+		<!-- Carousel -->
+		<div id="myCarousel" class="carousel slide">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+		<!-- Carousel items -->
+		<div class="carousel-inner">
+			<div class="active item">
+				<img src="{{imageLink}}" alt>
+				<a href="/main/{{slug}}">
+				<div class="carousel-caption">
+					<h4> {{mainHeadline}}</h4>
+					<p>{{mainDescription}}</p>
+				</div>
+				</a>
+			</div>	
+			<div class="item">…</div>
+			<div class="item">…</div>
+    	</div>
+    	<!-- Carousel nav -->
+   <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+  </div>
+  		{{/maines}}
+</div>
+
+
+
+
+		<hr>
+		<p>
+			<a href="/create">Create a new article</a>
+		</p>
+		
+		<p>
+			<a href="/data/main">Backtwack JSON</a>
+		</p>
+</div>

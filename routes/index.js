@@ -34,7 +34,7 @@ exports.index = function(req, res) {
 	// 3) callback function with (err, results)
 	//    err will include any error that occurred
 	//	  allMains is our resulting array of articles
-	normandyModel.find({}, 'mainHeadline slug lastupdated', function(err, allMain){
+	normandyModel.find({}, 'mainHeadline slug lastupdated imageLink mainDescription', function(err, allMain){
 
 		if (err) {
 			res.send("Unable to query database for articles").status(500);
