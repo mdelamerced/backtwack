@@ -93,10 +93,11 @@ exports.detail = function(req, res) {
 			//nonAPI search request for twitter			
 			//default display twitter search with JSON
 			var twitterUrl = 'http://search.twitter.com/search.json?q=';
+			var idSearchUr = 'http://search.twitter.com/search.json?q=from:'
     
 			//insert search paramaters
     		var lookFor = twitterUrl + [currentMain.publicTweet] + '&rpp=25'; 
-    		var govtSearch= twitterUrl + [currentMain.searchGovt] + '&rpp=25';
+    		var govtSearch= idSearchUr + [currentMain.searchGovt] + '&rpp=25';
     		
     		// make a request to remote_api_url
     		request.get(govtSearch, function(error, response, gdata){
@@ -107,6 +108,7 @@ exports.detail = function(req, res) {
 
 		    // convert data JSON string to native JS object
         		var govtData = JSON.parse(gdata);
+        		//govtData.filter('from_user');
         		
 
 
@@ -136,7 +138,8 @@ exports.detail = function(req, res) {
 			// render and return the template
 			res.render('detail.html', templateData);
 			})
-		})
+			
+			})
 
 		}) // end of .find (all) query
 		
