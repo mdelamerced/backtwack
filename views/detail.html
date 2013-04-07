@@ -1,8 +1,7 @@
 <div class="row">
 	
-	
 	<!-- first column w/ details-->
-	<div class="span5">
+	<div class="span4">
 		<h2>{{main.mainHeadline}}</h2>
 		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
 		<p>{{main.mainDescription}}</p>
@@ -10,35 +9,21 @@
 		<img src="{{main.imageLink}}" class= "img-polaroid" width="320px">
 
 		<hr>
+		</div>
+	<div class="span4">
 		<h3>News feed</h3>
 		
-				{{#main.newsArticles}}
+		{{#main.newsArticles}}
 		<br>
 		{{/main.newsArticles}}
 		
 		{{^main.newsArticles}}No News Articles {{/main.newsArticles}}	
+		
+		<hr>
 	</div>
-		
-		
-	<!-- second column w/ tweets-->
+	
 	<div class="span4">
 	
-	<hr>
-		<h3>Twitter feed</h3>
-		
-				<br>
-			{{#publicT}}
-				<i>{{created_at}}</i>
-				<p>{{from_user}}</p>
-				<p>{{text}}</p>
-			<hr>
-			{{/publicT}}
-
-			{{^publicT}}No tweets{{/publicT}}
-	</div>
-
-	<!-- third column w/ listings -->
-	<div class="span3">
 		<h3>Available Headlines</h3>
 		
 		{{#maines}}
@@ -52,8 +37,45 @@
 		<p><a href="/"> Back to home</a></p>
 	
 	<hr>
+	</div>
 	
-	<h3>User Posts</h3>
+</div>
+	<div class="row">
+	<div class="span4">
+		<h3>Government feed</h3>
+		
+				<br>
+			{{#govtF}}
+				<i>{{created_at}}</i>
+				<p>{{from_user_name}}</p>
+				<p>{{text}}</p>
+			<hr>
+			{{/govtF}}
+
+			{{^govtF}}No tweets{{/govtF}}
+	</div>
+		
+		
+	<!-- second column w/ tweets-->
+	<div class="span4">
+	
+		<h3>Public Twitter feed</h3>
+		
+				<br>
+			{{#publicT}}
+				<i>{{created_at}}</i>
+				<p>{{from_user_name}}</p>
+				<p>{{text}}</p>
+			<hr>
+			{{/publicT}}
+
+			{{^publicT}}No tweets{{/publicT}}
+	</div>
+
+	<!-- third column w/ listings -->
+	<div class="span3">
+			
+	<h3>Comments</h3>
 		{{#main.userPosts}}
 			<i>{{userName}}</i><br>
 			<p>{{userText}}</p>
@@ -90,7 +112,7 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 
 
 

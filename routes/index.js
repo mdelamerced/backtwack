@@ -94,22 +94,36 @@ exports.detail = function(req, res) {
 			//default display twitter search with JSON
 			var twitterUrl = 'http://search.twitter.com/search.json?q=';
     
-    //insert search paramaters
-    		var lookFor = twitterUrl + [currentMain.publicTweet]+ '&rpp=25'; 
+			//insert search paramaters
+    		var lookFor = twitterUrl + [currentMain.publicTweet] + '&rpp=25'; 
+    		var govtSearch= twitterUrl + [currentMain.searchGovt] + '&rpp=25';
+    		
+    		// make a request to remote_api_url
+    		request.get(govtSearch, function(error, response, gdata){
 
-    // make a request to remote_api_url
+	    		if (error){
+		    		res.send("There was an error requesting remote api.");
+		    	}
+
+		    // convert data JSON string to native JS object
+        		var govtData = JSON.parse(gdata);
+        		
+
+
+        	// make a request to remote_api_url
     		request.get(lookFor, function(error, response, data){
 
 	    		if (error){
 		    		res.send("There was an error requesting remote api.");
 		    		}
 
-        // convert data JSON string to native JS object
-        	var twitterData = JSON.parse(data);
-
+		    // convert data JSON string to native JS object
+        		var twitterData = JSON.parse(data);
+        		
 			
 			//prepare template data for view
 			var templateData = {
+				govtF : govtData.results,
 				publicT : twitterData.results,
 				main : currentMain,
 				maines : allMain,
@@ -121,7 +135,8 @@ exports.detail = function(req, res) {
 
 			// render and return the template
 			res.render('detail.html', templateData);
-			})	
+			})
+		})
 
 		}) // end of .find (all) query
 		
@@ -368,38 +383,3 @@ exports.data_all = function(req, res) {
         res.json(jsonData);
     });
 }
-/*
-// requesting data from remote JSON location
-exports.remote_api = function(req, res) {
-
-	//default display twitter search with JSON
-    var twitterUrl = 'http://search.twitter.com/search.json?q=';
-    
-    //insert search paramaters
-    var lookFor = twitterUrl + [currentMain.publicTweet]+ '&rpp=25'; 
-
-    // make a request to remote_api_url
-    request.get(lookFor, function(error, response, data){
-
-        if (error){
-            res.send("There was an error requesting remote api.");
-        }
-
-        // convert data JSON string to native JS object
-        var twitterData = JSON.parse(data);
-
-        // if twitterData has property 'status == OK' then successful api request
-       // if (twitterData.status == 'OK') {
-
-            // prepare template data for remote_api_demo.html template
-            var templateData = {
-             	main : twitterData.mains,
-                rawJSON : data, 
-                remote_url : lookFor
-            }
-
-            return res.render('remote_api_demo.html', templateData);
-        }   
-    })
-};
-*/
