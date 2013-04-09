@@ -44,7 +44,7 @@
    
      <div class="hero-unit"> 
         <h1>What do you want to know today?</h1>
-        <p>Filter out public twitter™ feeds for the world around you. Is the train late? Why is traffic so bad? I just got scammed. What is your government doing about it? Has this happened to someone else? Start a topic and see the feed.</p>
+        <p>Filter out public Twitter™ feeds for the world around you. Is the train late? Why is traffic so bad? I just got scammed. What is your government doing about it? Has this happened to someone else? Start a topic and see the feed.</p>
         <p><a href="/create" class="btn btn-primary btn-large">Get started »</a></p>
        
      </div>
@@ -52,12 +52,13 @@
   
 
       <!-- row of columns -->
-      
+    <div class="container middle">
     <h2> Latest Posts </h2>
   
 	<div class="row-fluid">
-	  {{#maines}}	
+	  	
 	<ul class="thumbnails">
+	{{#maines}}
 		<li class="span3">
 		  
 		<a href="/main/{{slug}}">
@@ -71,9 +72,10 @@
 		</div>
 		</a>
 		</li>
+		 {{/maines}}
 	</ul>
 	</div>
 	</div>
-	 {{/maines}}
+    </div>
 	
   </div> 
