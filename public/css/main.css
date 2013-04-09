@@ -4,22 +4,26 @@
    Author's custom styles
    ========================================================================== */
    
-   .body {
-	   background-color:#0aa994;
+  
+   
+   
+   .navbar-inverse .navbar-inner {
+	  background-image: linear-gradient(to bottom,#222,rgb(16, 64, 66));
 	   
    }
    
-   
-   .navbar-inner {
-	   background-color:#0e7a72;   
+   body {
+	   background-color:rgb(116, 161, 153);
 	   
    }
    
-   .thumbnails {
-	   background-color: #ffffff;
-	   
+ 
+   .row-fluid [class*="span"] {
+	   background: #fff;
 	   
    }
+	     
+   
    
    
 
