@@ -95,11 +95,14 @@ exports.detail = function(req, res) {
 		    	
 		  */
 		    	
-			T.get('statuses/user_timeline', { q: [currentMain.searchGovt]  }, function(err, gdata) {
+			T.get('statuses/user_timeline', { screen_name: [currentMain.searchGovt]  }, function(err, gdata) {
 			
 				if (err){
 		    		res.send("There was an error requesting remote api.");
 		      	}
+		    
+		    //console.log(gdata);  	
+		      	
 		    /*	
 		    	else {
 		    		
@@ -141,12 +144,12 @@ exports.detail = function(req, res) {
 			
 			//prepare template data for view
 			var templateData = {
-				govtF : gdata.statuses,
+				govtF : gdata,
 				publicT : data.statuses,
 				main : currentMain,
 				maines : allMain,
 				rawJSON : data, 
-             //   remote_url : lookFor,
+             // remote_url : lookFor,
 			//	tweet : tstream,
 				pageTitle : currentMain.mainHeadline
 			};

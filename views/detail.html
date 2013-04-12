@@ -81,12 +81,11 @@
 </div>
 	<div class="row">
 	<div class="span4">
-		<h3>Institutional Twitter feed</h3>
+		<h3>Twitter feed of {{main.searchGovt}}</h3>
 		
 				<br>
 			{{#govtF}}
 				<i>{{created_at}}</i>
-				<p>{{from_user_name}}</p>
 				<p>{{text}}</p>
 			<hr>
 			{{/govtF}}
@@ -98,7 +97,9 @@
 	<!-- second column w/ tweets-->
 	<div class="span4">
 	
-		<h3>Public Twitter feed</h3>
+		<h3>Recent Public Twitter feed</h3>
+		
+		<h4> Searching for <i>{{main.publicTweet}}</i></h4>
 		
 				<br>
 			{{#publicT}}
