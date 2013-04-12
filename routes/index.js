@@ -13,13 +13,11 @@ var normandyModel = require("../models/normandy.js"); //db model
 var Twit = require('twit');
 
 var T = new Twit({
-    consumer_key:         'config.js'
-  , consumer_secret:      'config.js'
-  , access_token:         'config.js'
-  , access_token_secret:  'config.js'
+    consumer_key:         process.env.CONSUMER_KEY
+  , consumer_secret:      process.env.CONSUMER_SECRET
+  , access_token:         process.env.ACCESS_TOKEN
+  , access_token_secret:  process.env.ACCESS_TOKEN_SECRET
 })
-
-
 /*
 	GET /
 */
@@ -82,14 +80,33 @@ exports.detail = function(req, res) {
 
 			console.log("retrieved all articles : " + allMain.length);			
 			//This uses the twit library for nodejs
-/*			
-			var tstream = T.stream('statuses/filter', { track:[currentMain.publicTweet] 
-				
-			})
-				tstream.on('tweet', function (tweet) {
-				console.log(tweet)
-			})
-*/
+		    		
+    		T.get('search/tweets', { q: [currentMain.publicTweet]  }, function(err, data) {
+    		
+	    		if (err){
+		    		res.send("There was an error requesting remote api.");
+		    	}
+		  	  /*
+		    	else {
+		    	
+			    	console.log(data);
+		    		var twitterData = JSON.parse(data);
+		    	}
+		    	
+		  */
+		    	
+			T.get('statuses/user_timeline', { q: [currentMain.searchGovt]  }, function(err, gdata) {
+			
+				if (err){
+		    		res.send("There was an error requesting remote api.");
+		      	}
+		    /*	
+		    	else {
+		    		
+		    		var govtData = JSON.parse(gdata);
+		    	
+		    	}*/
+/*
 			//nonAPI search request for twitter			
 			//default display twitter search with JSON
 			var twitterUrl = 'http://search.twitter.com/search.json?q=';
@@ -98,6 +115,7 @@ exports.detail = function(req, res) {
 			//insert search paramaters
     		var lookFor = twitterUrl + [currentMain.publicTweet] + '&rpp=25'; 
     		var govtSearch= idSearchUr + [currentMain.searchGovt] + '&rpp=25';
+
     		
     		// make a request to remote_api_url
     		request.get(govtSearch, function(error, response, gdata){
@@ -110,8 +128,6 @@ exports.detail = function(req, res) {
         		var govtData = JSON.parse(gdata);
         		//govtData.filter('from_user');
         		
-
-
         	// make a request to remote_api_url
     		request.get(lookFor, function(error, response, data){
 
@@ -121,26 +137,25 @@ exports.detail = function(req, res) {
 
 		    // convert data JSON string to native JS object
         		var twitterData = JSON.parse(data);
-        		
+*/  		
 			
 			//prepare template data for view
 			var templateData = {
-				govtF : govtData.results,
-				publicT : twitterData.results,
+				govtF : gdata.statuses,
+				publicT : data.statuses,
 				main : currentMain,
 				maines : allMain,
 				rawJSON : data, 
-                remote_url : lookFor,
+             //   remote_url : lookFor,
 			//	tweet : tstream,
 				pageTitle : currentMain.mainHeadline
 			};
 
 			// render and return the template
 			res.render('detail.html', templateData);
-			})
 			
+				})
 			})
-
 		}) // end of .find (all) query
 		
 	}); // end of .findOne query
@@ -175,9 +190,9 @@ exports.createMain = function(req, res) {
 
 	});
 	
-	newMain.googledNews = req.body.googledNews.split("+");
-	newMain.publicTweet = req.body.publicTweet.split("+");
-	newMain.searchGovt = req.body.searchGovt.split("+");
+	newMain.googledNews = req.body.googledNews.split(",");
+	newMain.publicTweet = req.body.publicTweet.split(",");
+	newMain.searchGovt = req.body.searchGovt.split(",");
 	newMain.imageLink = req.body.imageLink.split(",");
 	
 	// save the newMainto the database
@@ -254,9 +269,9 @@ exports.updateMain = function(req, res) {
 		mainHeadline : req.body.mainHeadline,
 		mainDescription : req.body.mainDescription,
 		imageLink : req.body.imageLink.split(","),
-		googledNews : req.body.googledNews.split("+"),
-		publicTweet : req.body.publicTweet.split("+"),
-		searchGovt : req.body.searchGovt.split("+")	
+		googledNews : req.body.googledNews.split(","),
+		publicTweet : req.body.publicTweet.split(","),
+		searchGovt : req.body.searchGovt.split(",")	
 	}
 
 	// query for article
