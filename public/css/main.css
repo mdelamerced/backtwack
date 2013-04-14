@@ -12,11 +12,11 @@
 	   
    }
    
-   body {
+  /* body {
 	   background-color:rgb(116, 161, 153);
 	   
    }
-   
+   */
  
    .row-fluid [class*="span"] {
 	   background: #fff;

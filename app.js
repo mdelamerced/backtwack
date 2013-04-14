@@ -7,7 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
-//var Twit = require('twit');
+var Twit = require('twit');
 
 
 
@@ -50,6 +50,7 @@ app.configure('development', function(){
 SKIPPING FOR FUTURE CLASSES
 SESSIONS w/ MongoDB (store sessions across multiple dynos)
 COOKIEHASH in your .env file (also share with heroku) 
+always aboove the router
 */
 // app.use(express.cookieParser(process.env.COOKIEHASH));
 // app.use(express.session({ 

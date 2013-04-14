@@ -50,13 +50,19 @@
 		<hr>
 		</div>
 	<div class="span4">
-		<h3>News feed</h3>
+		<h3>News feed from the New York Times</h3>
 		
-		{{#main.newsArticles}}
+		{{#newsD}}
+			<a href="{{url}}"><strong>{{title}}</strong></a>
+			<p>{{date}}</p>
+			<p>{{body}}</p>
+		
 		<br>
-		{{/main.newsArticles}}
 		
-		{{^main.newsArticles}}No News Articles {{/main.newsArticles}}	
+		
+		{{/newsD}}
+		
+		{{^newsD}}No News Articles {{/newsD}}	
 		
 		<hr>
 	</div>
