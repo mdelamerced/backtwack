@@ -1,4 +1,4 @@
-<!-- Fixed navigation bar -->
+<!-- top navigation bar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -7,22 +7,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="/">entwines</a>
+          <a class="brand" href="/">entwin.es</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="/">About</a></li>
-              <li><a href="/">About</a></li>
+              <li class="active"><a href="/about">About</a></li>
+              <li><a href="/create">Create</a></li>
               <li><a href="/">Join</a></li>
               <li class="dropdown">
-                <a href="http://twitter.github.io/bootstrap/examples/hero.html#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <a href="/" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="http://twitter.github.io/bootstrap/examples/hero.html#">Action</a></li>
-                  <li><a href="http://twitter.github.io/bootstrap/examples/hero.html#">Another action</a></li>
-                  <li><a href="http://twitter.github.io/bootstrap/examples/hero.html#">Something else here</a></li>
+                  <li><a href="/">Action</a></li>
+                  <li><a href="/">Another action</a></li>
+                  <li><a href="/">Something else here</a></li>
                   <li class="divider"></li>
                   <li class="nav-header">Nav header</li>
-                  <li><a href="http://twitter.github.io/bootstrap/examples/hero.html#">Separated link</a></li>
-                  <li><a href="http://twitter.github.io/bootstrap/examples/hero.html#">One more separated link</a></li>
+                  <li><a href="/">Separated link</a></li>
+                  <li><a href="/">One more separated link</a></li>
                 </ul>
               </li>
             </ul>
@@ -36,58 +36,13 @@
       </div>
     </div>
 
+<!-- main body -->
 
-<div class="row">
-	
-	<!-- first column w/ details-->
-	<div class="span4">
-		<h2>{{main.mainHeadline}}</h2>
-		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
-		<p>{{main.mainDescription}}</p>
-		
-		<img src="{{main.imageLink}}" class= "img-polaroid" width="320px">
-
-		<hr>
-		</div>
-	<div class="span4">
-		<h3>News feed from the New York Times</h3>
-		
-		{{#newsD}}
-			<a href="{{url}}"><strong>{{title}}</strong></a>
-			<p>{{date}}</p>
-			<p>{{&body}}</p>
-		
-		<br>
-		
-		
-		{{/newsD}}
-		
-		{{^newsD}}No News Articles {{/newsD}}	
-		
-		<hr>
-	</div>
-	
-	<div class="span4">
-	
-		<h3>Available Headlines</h3>
-		
-		{{#maines}}
-		<li>
-			<a href="/main/{{slug}}">{{mainHeadline}}</a>
-		</li>
-		{{/maines}}
-
-		<br>
-		<a href="/create">Add a new headline</a>
-		<p><a href="/"> Back to home</a></p>
-	
-	<hr>
-	</div>
-	
-</div>
-	<div class="row">
-	<div class="span4">
-		<h3>Twitter feed of {{main.searchGovt}}</h3>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
+      <!--left content-->
+      <h3>Twitter feed of {{main.searchGovt}}</h3>
 		
 				<br>
 			{{#govtF}}
@@ -97,13 +52,10 @@
 			{{/govtF}}
 
 			{{^govtF}}No tweets{{/govtF}}
-	</div>
-		
-		
-	<!-- second column w/ tweets-->
-	<div class="span4">
-	
-		<h3>Recent Public Twitter feed</h3>
+    </div>
+    <div class="span4">
+      <!--middle content-->
+      <h3>Recent Public Twitter feed</h3>
 		
 		<h4> Searching for <i>{{main.publicTweet}}</i></h4>
 		
@@ -119,12 +71,11 @@
 			{{/publicT}}
 
 			{{^publicT}}No tweets{{/publicT}}
-	</div>
 
-	<!-- third column w/ listings -->
-	<div class="span3">
-			
-	<h3>Comments</h3>
+    </div>
+     <div class="span4">
+      <!--right content-->
+      	<h3>Comments</h3>
 		{{#main.userPosts}}
 			<strong>{{userName}}</strong><br>
 			<p>{{userText}}</p>
@@ -161,7 +112,20 @@
 			</div>
 		</div>
 	</div>
+
+    </div>
+  </div>
 </div>
 
+<!-- bottom -->
 
-
+<div class="row">
+	<div class="class5">
+	<!-- left content -->
+	</div>
+	
+	<div class="class5">
+	<!-- middle content -->
+	</div>
+	
+	</div>

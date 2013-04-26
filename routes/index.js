@@ -43,7 +43,8 @@ exports.index = function(req, res) {
 		};
 
 		console.log("retrieved " + allMain.length + " articles from database");
-
+		allMain.sort('-created');
+		
 		var templateData = {
 			maines : allMain,
 			pageTitle : "Main articles (" + allMain.length + ")"
@@ -53,6 +54,63 @@ exports.index = function(req, res) {
 	});
 
 }
+
+exports.createFront = function(req, res){
+
+	
+	console.log("received form submission");
+	console.log(req.body);
+	
+	//combine @ and # to form headline
+	
+	
+//	var atplushash =  searchGovt + " + " + publicTweet ;
+	
+
+	// accept form post data
+	var newMain = new normandyModel({
+		
+		mainHeadline : req.body.publicTweet,
+		//atplushash : req.body.mainHeadline,
+		//mainHeadline : req.body.mainHeadline,
+		//mainDescription : req.body.mainDescription,
+		//imageLink : req.body.imageLink,
+		//googledNews : req.body.googledNews,
+		publicTweet : req.body.publicTweet,
+		searchGovt : req.body.searchGovt,
+		slug : req.body.publicTweet.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
+
+	});
+	
+	//newMain.googledNews = req.body.googledNews.split("+");
+	newMain.publicTweet = req.body.publicTweet.split(",");
+	newMain.searchGovt = req.body.searchGovt.split(",");
+	//newMain.imageLink = req.body.imageLink.split(",");
+	
+	// save the newMainto the database
+	newMain.save(function(err){
+		if (err) {
+			console.error("Error on saving new article");
+			console.error(err); // log out to Terminal all errors
+
+			var templateData = {
+			//	page_title : 'Start a new article',
+				errors : err.errors, 
+				main : req.body
+			};
+
+			res.render('create_form.html', templateData);
+			// return res.send("There was an error when creating a new article");
+
+		} else {
+			console.log("Created a new article!");
+			console.log(newMain);
+			
+			// redirect to the astronaut's page
+			res.redirect('/main/'+ newMain.slug)
+		}
+	});
+};
 
 /*
 	GET /main/:main_id
@@ -85,28 +143,42 @@ exports.detail = function(req, res) {
 			console.log("retrieved all articles : " + allMain.length);
 			
 			//Search the NYT for articles
-			//var nytURL = 'http://api.nytimes.com/svc/search/v1/article?format=json&query=';
 			
 			var nytURL = 'http://api.nytimes.com/svc/search/v1/article?query=';
 			
 			//insert search paramaters
-    		var newsSearch = nytURL + [currentMain.googledNews] + '&api-key=' + nytAPI; 
+    		var newsSearch = nytURL + [currentMain.publicTweet] + '&api-key=' + nytAPI; 
     		
     		request.get(newsSearch, function(error, response, nData){
 
 	    		if (error){
 		    		res.send("There was an error requesting remote api.");
 		    	}
-		    	
-		    	//console.log(nData);
+		    
 		    	var newsData = JSON.parse(nData);
-		    							
+		   // 	console.log(newsData);
+		    	
+		    	for (var i  = newsData.length ; i < 3 ; i ++){
+			    	 var newsShow = newsData.length;
+			    	 console.log(newsShow);
+		    	}
+		    			    	
+			  /*  newsData.results.date = function() {
+					return moment(this.results.date).format("MM-DD-YYYY");
+					}
+					console.log(newsData);			*/		
+					
+						
 			//This uses the twit library for nodejs    		
-    		T.get('search/tweets', { q: [currentMain.publicTweet]  }, function(err, data) {
+    		T.get('search/tweets', { q: [currentMain.publicTweet] , include_entities: 'true' }, function(err, data) {
     		
 	    		if (err){
 		    		res.send("There was an error requesting remote api.");
 		    	}
+		    	
+		    	//var tLinks = JSON.stringify(data);
+		    	//console.log(tLinks);
+		    	//console.log(data);
 		    	
 			T.get('statuses/user_timeline', { screen_name: [currentMain.searchGovt]  }, function(err, gdata) {
 			
@@ -116,9 +188,11 @@ exports.detail = function(req, res) {
 		    		
 			//prepare template data for view
 			var templateData = {
-				newsD : newsData.results,
+			//	newsD : newsShow.results,
+				newsD: newsData.results,
 				govtF : gdata,
 				publicT : data.statuses,
+				//publicT : tLinks.statuses,
 				main : currentMain,
 				maines : allMain,
 				rawJSON : data, 
@@ -127,6 +201,7 @@ exports.detail = function(req, res) {
 
 			// render and return the template
 			res.render('detail.html', templateData);
+						
 					}) //end of nyt search
 				}) //end of twitter keyword search
 			}) //end of twitter user search
@@ -196,7 +271,7 @@ exports.createMain = function(req, res) {
 
 exports.editMainForm = function(req, res) {
 
-	// Get astronaut from URL params
+	// Get article from URL params
 	var main_id = req.params.main_id;
 	var mainQuery = normandyModel.findOne({slug:main_id});
 	mainQuery.exec(function(err, mains){
@@ -246,6 +321,7 @@ exports.updateMain = function(req, res) {
 		googledNews : req.body.googledNews.split("+"),
 		publicTweet : req.body.publicTweet.split(","),
 		searchGovt : req.body.searchGovt.split(",")	
+	//	slug : req.body.mainHeadline.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
 	}
 
 	// query for article

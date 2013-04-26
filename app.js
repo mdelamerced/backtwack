@@ -64,6 +64,7 @@ always aboove the router
 var routes = require('./routes/index.js');
 
 app.get('/', routes.index);
+app.post('/:create', routes.createFront); //form post from the main page
 
 //new main routes
 app.get('/create',routes.mainForm); //display form
