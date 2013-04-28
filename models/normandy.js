@@ -30,6 +30,7 @@ var normandySchema = new Schema({
 	lastupdated : { type: Date, default: Date.now },
 	googledNews :[String],
 	publicTweet :[String],
+	publicUrl : [String],
 	searchGovt : [String],
 	userPosts : [userPostSchema]
 });

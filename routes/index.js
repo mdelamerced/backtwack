@@ -21,6 +21,8 @@ var T = new Twit({
 
 var nytAPI =  process.env.NYTIMES_CONSUMERAPIKEY;
 
+var _ = require ('underscore'); //underscore.js
+
 
 /*
 	GET /
@@ -156,17 +158,15 @@ exports.detail = function(req, res) {
 		    	}
 		    
 		    	var newsData = JSON.parse(nData);
-		   // 	console.log(newsData);
 		    	
-		    	for (var i  = newsData.length ; i < 3 ; i ++){
-			    	 var newsShow = newsData.length;
-			    	 console.log(newsShow);
-		    	}
-		    			    	
-			  /*  newsData.results.date = function() {
+		    	var displayNews = _.initial(newsData.results,[7]);
+		    	
+		    	console.log(displayNews);
+		    			    			    	
+			    newsData.results.date = function() {
 					return moment(this.results.date).format("MM-DD-YYYY");
 					}
-					console.log(newsData);			*/		
+					console.log(newsData.results.date);			
 					
 						
 			//This uses the twit library for nodejs    		
@@ -176,23 +176,39 @@ exports.detail = function(req, res) {
 		    		res.send("There was an error requesting remote api.");
 		    	}
 		    	
-		    	//var tLinks = JSON.stringify(data);
-		    	//console.log(tLinks);
-		    	//console.log(data);
+		    	var dataEntities = _.pluck(data.statuses, "entities");
+			  			    	
+		    	var dataUrls = _.pluck(dataEntities, "urls");
+		    	//console.log(dataUrls);
+		    	var dataImages = _.pluck(dataEntities, "media");
+		    	//console.log(dataImages);
 		    	
 			T.get('statuses/user_timeline', { screen_name: [currentMain.searchGovt]  }, function(err, gdata) {
 			
 				if (err){
 		    		res.send("There was an error requesting remote api.");
 		      	}
+		      	
+		      	var gEntities = _.pluck(gdata, "entities");
+		      	
+		      	var gLinks = _.pluck(gEntities, "urls");
+		      	
+		    //  	console.log (gLinks);
+		      	
+		      	var gImages = _.pluck(gEntities, "media");
+		      	//console.log(gImages.media_url);
+		      	
 		    		
 			//prepare template data for view
 			var templateData = {
 			//	newsD : newsShow.results,
-				newsD: newsData.results,
+				newsD: displayNews,
 				govtF : gdata,
+				govLinks : gLinks,
+				govImages : gImages,
 				publicT : data.statuses,
-				//publicT : tLinks.statuses,
+				publicUrl :dataUrls,
+				imageLink : dataImages,
 				main : currentMain,
 				maines : allMain,
 				rawJSON : data, 
