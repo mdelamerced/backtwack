@@ -46,11 +46,14 @@
 			<h3>@ + #</h3>
 			<p>What is going on in the world around you?</p>
 			<label for="searchGovt"> 			
-				
+				{{#errors.searchGovt}}
+				<span class="help-block alert alert-error">{{type}}</span>
+				{{/errors.searchGovt}}
 			@	<input class="input-big" type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}" required>
-	<!--			{{#errors.searchGovt}}
+				
+	<!--			
 				<span class="help-block alert alert-error">{{type}}</span>		
-				{{/errors.searchGovt}} -->
+				 -->
 			</label>
 			
 				vs

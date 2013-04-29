@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="/">Project name</a>
+          <a class="brand" href="/">entwinesProject name</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="/">About</a></li>
@@ -46,21 +46,11 @@
 
 		<form method="POST" action="/main/{{main.slug}}/edit">
 
-			<label for="mainHeadline">
-				Name <input type="text" name="mainHeadline" class="required" id="mainHeadline" value="{{main.mainHeadline}}" required>
-			</label>
+			<label for="searchGovt">@<input type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}" required></label>
 			
-			<label for="googledNews"> News text to search for <input type="text" name="googledNews" id="googledNews" value="{{main.googledNews}}"></label>
-
-			<label for="searchGovt">Related government search <input type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}"></label>
-			
-			<label for="publicTweet">Public search <input type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}"></label>
-			
-			<label for="imageLink"> Link an image <input type="text" name="imageLink" id="imageLink" value="{{main.imageLink}}"></label>
-			
-			<label for="mainDescription"> Write a brief description <textarea type="text" name="mainDescription" id="mainDescription" value="{{main.mainDescription}}"> </textarea></label>
-			
-			<input type="submit" value="Submit changes">
+			<label for="publicTweet">#<input type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required></label>
+						
+			<input type="submit" class="btn btn-action" value="Submit changes">
 
 		</form>
 

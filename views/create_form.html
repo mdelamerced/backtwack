@@ -43,31 +43,34 @@
 	<div class="span8">
 		<h3>{{page_title}}</h3>
 
-		<form method="POST" action="/create">
-
-			<label for="mainHeadline">
-				{{#errors.mainHeadline}}
+		 <form class="form-inline" method="POST" action="/create">
+			
+			<h3>@ + #</h3>
+			<p>What is going on in the world around you?</p>
+			<label for="searchGovt"> 			
+				{{#errors.searchGovt}}
 				<span class="help-block alert alert-error">{{type}}</span>
-				{{/errors.mainHeadline}}
-
-				Name of Article <input type="text" name="mainHeadline" class="required" id="mainHeadline" value="{{main.mainHeadline}}" required>
-	
+				{{/errors.searchGovt}}
+			@	<input class="input-big" type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}" required>
+				
+	<!--			
+				<span class="help-block alert alert-error">{{type}}</span>		
+				 -->
 			</label>
 			
-			<label for="googledNews"> News text to search for <input type="text" name="googledNews" id="googledNews"></label>
-			<div class="input-prepend">
-			<label for="searchGovt">Twitter account  <span class="add-on">@</span> <input class="span2" id="prependedInput" type="text" name="searchGovt" id="searchGovt"></label></div>
+				vs
 			
-			<label for="publicTweet">Public search <input type="text" name="publicTweet" id="publicTweet"></label>
-			
-			<label for="imageLink"> Link images <input type="text" name="imageLink" id="imageLink"></label>
-			
-			<label for="mainDescription"> Write a brief description <textarea type="text" name="mainDescription" id="mainDescription"> </textarea>
+			<label for="publicTweet">
+		
+			#	<input class="input-big" type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required>
+			<!--		{{#errors.publicTweet}}
+				<span class="help-block alert alert-error">{{type}}</span>
+				{{/errors.publicTweet}}-->
 			</label>
+			</h3>
+			<button type="submit" class="btn btn-large btn-primary" type="button">See the feed</button>
 			
-			<input type="submit" value="Create new article">
-
-		</form>
+	</form>
 	</div>
 </div>
 

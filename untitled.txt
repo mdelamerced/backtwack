@@ -1,0 +1,17 @@
+for (n in data.results) {
+
+	var theTweet = data.results[n];
+	
+	for (em in theTweet.entities.media) {
+		var currMedia = theTweet.entities.media[em];
+		console.log(currMedia.url);
+		
+	}
+	
+	for (i in theTweet.entities.urls) {
+		var currURL = theTweet.entities.urls[i];
+		console.log(currURL.url);
+		
+	}
+	
+}

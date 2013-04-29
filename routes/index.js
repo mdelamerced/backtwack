@@ -161,13 +161,13 @@ exports.detail = function(req, res) {
 		    	
 		    	var displayNews = _.initial(newsData.results,[7]);
 		    	
-		    	console.log(displayNews);
-		    			    			    	
+		    	//console.log(displayNews);
+		    /*			    			    	
 			    newsData.results.date = function() {
 					return moment(this.results.date).format("MM-DD-YYYY");
 					}
 					console.log(newsData.results.date);			
-					
+			*/		
 						
 			//This uses the twit library for nodejs    		
     		T.get('search/tweets', { q: [currentMain.publicTweet] , include_entities: 'true' }, function(err, data) {
@@ -181,7 +181,7 @@ exports.detail = function(req, res) {
 		    	var dataUrls = _.pluck(dataEntities, "urls");
 		    	//console.log(dataUrls);
 		    	var dataImages = _.pluck(dataEntities, "media");
-		    	//console.log(dataImages);
+		    	console.log(dataImages);
 		    	
 			T.get('statuses/user_timeline', { screen_name: [currentMain.searchGovt]  }, function(err, gdata) {
 			
@@ -204,10 +204,10 @@ exports.detail = function(req, res) {
 			//	newsD : newsShow.results,
 				newsD: displayNews,
 				govtF : gdata,
-				govLinks : gLinks,
+				govLinks : gEntities.gLinks,
 				govImages : gImages,
 				publicT : data.statuses,
-				publicUrl :dataUrls,
+				publicUrl :dataEntities.dataUrls,
 				imageLink : dataImages,
 				main : currentMain,
 				maines : allMain,
@@ -331,10 +331,10 @@ exports.updateMain = function(req, res) {
 
 	// prepare form data
 	var updatedData = {
-		mainHeadline : req.body.mainHeadline,
+	/*	mainHeadline : req.body.mainHeadline,
 		mainDescription : req.body.mainDescription,
 		imageLink : req.body.imageLink.split(","),
-		googledNews : req.body.googledNews.split("+"),
+		googledNews : req.body.googledNews.split("+"),*/
 		publicTweet : req.body.publicTweet.split(","),
 		searchGovt : req.body.searchGovt.split(",")	
 	//	slug : req.body.mainHeadline.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')

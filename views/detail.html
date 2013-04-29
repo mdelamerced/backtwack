@@ -69,7 +69,7 @@
 				<hr>
 			{{/publicT}}
 				{{#publicUrl}}
-				<a href="{{url}}">{{url}}</a>
+				<a href="{{data.dataEntities.urls.url}}">{{data.dataEntities.urls.url}}</a>
 				{{/publicUrl}}
 				{{#imageLink}}
 				<a href="{{media_url}}"><img src="{{media_urll}}"></a>
@@ -83,6 +83,12 @@
     </div>
      <div class="span4">
       <!--right content-->
+      	  <!--Edit feed-->
+     	 <h2>{{main.mainHeadline}}</h2>
+		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
+		<p>{{main.mainDescription}}</p>
+		
+	  	
       	<h3>Comments</h3>
 		{{#main.userPosts}}
 			<strong>{{userName}}</strong><br>
