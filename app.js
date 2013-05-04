@@ -90,6 +90,14 @@ app.get('/data/main/:main_id', routes.data_detail);
 // consume a remote API
 //app.get('/remote_api', routes.remote_api);
 
+/*
+//authenticate with twitter
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { successRedirect: '/',
+                                     failureRedirect: '/login' }));
+*/
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

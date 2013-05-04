@@ -65,7 +65,14 @@
 				<a href="https://www.twitter.com/{{user.screen_name}}">
 				<p><strong>{{user.name}}</strong></p></a>
 				<p>{{text}}</p>
-				
+				{{#entities}}
+					{{#urls}}
+						<a href="{{display_url}}">{{display_url}}</a>
+					{{/urls}}
+					{{#media}}
+						<a href="{{media_url}}"><img src="{{media_url}}"></a>
+					{{/media}}
+				{{/entities}}
 				<hr>
 			{{/publicT}}
 				{{#publicUrl}}
@@ -88,11 +95,15 @@
 		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
 		<p>{{main.mainDescription}}</p>
 		
+
+     <p><a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="entwines" data-dnt="true">Tweet</a>
+     	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))		{js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
+		
 	  	
       	<h3>Comments</h3>
 		{{#main.userPosts}}
 			<strong>{{userName}}</strong><br>
-			<p>{{userText}}</p>
+			<p>{{{userText}}}</p>
 			<hr>
 		{{/main.userPosts}}
 

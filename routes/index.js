@@ -22,7 +22,25 @@ var T = new Twit({
 var nytAPI =  process.env.NYTIMES_CONSUMERAPIKEY;
 
 var _ = require ('underscore'); //underscore.js
+/*
+//twitter authentication via passport
+var passport = require('passport')
+  , TwitterStrategy = require('passport-twitter').Strategy;
 
+
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.CONSUMER_KEY,
+    consumerSecret: process.env.CONSUMER_SECRET,
+    callbackURL: "http://www.entwin.es/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    User.findOrCreate(..., function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
+*/
 
 /*
 	GET /
@@ -175,40 +193,48 @@ exports.detail = function(req, res) {
 	    		if (err){
 		    		res.send("There was an error requesting remote api.");
 		    	}
-		    	
+		    	// uses underscore.js to unpack the objects within the Twitter API
 		    	var dataEntities = _.pluck(data.statuses, "entities");
 			  			    	
 		    	var dataUrls = _.pluck(dataEntities, "urls");
 		    	//console.log(dataUrls);
 		    	var dataImages = _.pluck(dataEntities, "media");
-		    	console.log(dataImages);
-		    	
+		    //	console.log(dataImages);
+		    	/*
+		    data.exec(function parseLinks(tweet) {
+			    return tweet.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+/g, function(tweet) {
+				    return tweet.link(tweet);
+				    console.log(tweet);
+				    	});
+				};	
+		    	*/
 			T.get('statuses/user_timeline', { screen_name: [currentMain.searchGovt]  }, function(err, gdata) {
 			
 				if (err){
 		    		res.send("There was an error requesting remote api.");
 		      	}
 		      	
-		      	var gEntities = _.pluck(gdata, "entities");
+		      	//var gEntities = _.pluck(gdata, "entities");
 		      	
-		      	var gLinks = _.pluck(gEntities, "urls");
+		      	//var gLinks = _.pluck(gEntities, "urls");
 		      	
-		    //  	console.log (gLinks);
+		    // 	console.log (gLinks);
 		      	
-		      	var gImages = _.pluck(gEntities, "media");
+		      	//var gImages = _.pluck(gEntities, "media");
 		      	//console.log(gImages.media_url);
-		      	
+		      //	console.log("************")
+		      //	console.log(data.statuses[0].entities);
 		    		
 			//prepare template data for view
 			var templateData = {
 			//	newsD : newsShow.results,
 				newsD: displayNews,
 				govtF : gdata,
-				govLinks : gEntities.gLinks,
-				govImages : gImages,
+				//govLinks : gEntities.gLinks,
+				//govImages : gImages,
 				publicT : data.statuses,
-				publicUrl :dataEntities.dataUrls,
-				imageLink : dataImages,
+				//publicUrl :dataEntities.dataUrls,
+			//	imageLink : dataImages,
 				main : currentMain,
 				maines : allMain,
 				rawJSON : data, 
