@@ -67,23 +67,14 @@
 				<p>{{text}}</p>
 				{{#entities}}
 					{{#urls}}
-						<a href="{{display_url}}">{{display_url}}</a>
+						<a href="http://{{display_url}}">http://{{display_url}}</a>
 					{{/urls}}
 					{{#media}}
-						<a href="{{media_url}}"><img src="{{media_url}}"></a>
+						<a href="http://{{media_url}}"><img src="{{media_url}}"></a>
 					{{/media}}
 				{{/entities}}
 				<hr>
 			{{/publicT}}
-				{{#publicUrl}}
-				<a href="{{data.dataEntities.urls.url}}">{{data.dataEntities.urls.url}}</a>
-				{{/publicUrl}}
-				{{#imageLink}}
-				<a href="{{media_url}}"><img src="{{media_urll}}"></a>
-				{{/imageLink}}
-				
-				
-			
 
 			{{^publicT}}No tweets{{/publicT}}
 

@@ -194,11 +194,11 @@ exports.detail = function(req, res) {
 		    		res.send("There was an error requesting remote api.");
 		    	}
 		    	// uses underscore.js to unpack the objects within the Twitter API
-		    	var dataEntities = _.pluck(data.statuses, "entities");
+		    	//var dataEntities = _.pluck(data.statuses, "entities");
 			  			    	
-		    	var dataUrls = _.pluck(dataEntities, "urls");
+		    	//var dataUrls = _.pluck(dataEntities, "urls");
 		    	//console.log(dataUrls);
-		    	var dataImages = _.pluck(dataEntities, "media");
+		    //	var dataImages = _.pluck(dataEntities, "media");
 		    //	console.log(dataImages);
 		    	/*
 		    data.exec(function parseLinks(tweet) {
@@ -215,7 +215,6 @@ exports.detail = function(req, res) {
 		      	}
 		      	
 		      	//var gEntities = _.pluck(gdata, "entities");
-		      	
 		      	//var gLinks = _.pluck(gEntities, "urls");
 		      	
 		    // 	console.log (gLinks);
