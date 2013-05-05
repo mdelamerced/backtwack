@@ -43,12 +43,24 @@
   <div class="row-fluid">
     <div class="span4">
       <!--left content-->
-      <h3>Twitter feed of {{main.searchGovt}}</h3>
+      <h3>@ {{main.searchGovt}}
+	      VS
+      </h3>
 		
 				<br>
 			{{#govtF}}
 				<i>{{created_at}}</i>
 				<p>{{text}}</p>
+				
+				{{#entities}}
+					{{#urls}}
+						<a href="http://{{display_url}}">http://{{display_url}}</a>
+					{{/urls}}
+					{{#media}}
+						<a href="http://{{media_url}}"><img src="{{media_url}}"></a>
+					{{/media}}
+				{{/entities}}
+
 			<hr>
 			{{/govtF}}
 
@@ -56,9 +68,9 @@
     </div>
     <div class="span4">
       <!--middle content-->
-      <h3>Recent Public Twitter feed</h3>
+      <h3>The Public saying <i>{{main.publicTweet}}</i> </h3>
 		
-		<h4> Searching for <i>{{main.publicTweet}}</i></h4>
+		<h3> </h3>
 		
 				<br>
 			{{#publicT}}
@@ -87,10 +99,8 @@
 		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
 		<p>{{main.mainDescription}}</p>
 		
-		<script type="text/javascript">
-     <p><a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="entwines" data-dnt="true">Tweet</a>
-     	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))		{js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
-		
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="entwinesit" data-hashtags="entwines" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>	
 	  	
       	<h3>Comments</h3>
       	
@@ -194,7 +204,7 @@
 		{{/maines}}
 
 		<br>
-		<a href="/create">Add a new headline</a>
+		<a href="/create">Add a new topic</a>
 		<p><a href="/"> Back to home</a></p>
 	
 	<hr>
