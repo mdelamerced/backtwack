@@ -44,9 +44,12 @@
     <div class="span5">
       <!--left content-->
       <h3>@ {{main.searchGovt}} </h3>
-				<br>
-			{{#govtF}}
 				
+			{{#govtF}}
+			{{#user}}
+			<img src="{{profile_image_url}}">
+			{{/user}}
+				<br>
 				<script type="text/javascript" src="/js/jquery.highlight-1.1.source.js">
 				jQuery.$('p').highlight(["new york"]);
 				</script>
@@ -82,7 +85,7 @@
     <div class="span5">
       <!--middle content-->
       
-      <h3>The Public # <i>{{main.publicTweet}}</i> </h3>
+      <h3># <i>{{main.publicTweet}}</i> </h3>
 		
 				<br>
 			{{#publicT}}
@@ -94,7 +97,10 @@
 				</blockquote>
 				<p class="text-right">
 				<a href="https://www.twitter.com/{{user.screen_name}}">
-				<p><strong>{{user.name}}</strong></a><i>{{created_at}}</i></p>
+				<p>	{{#user}}
+			<img src="{{profile_image_url}}">
+			{{/user}}<strong>{{user.name}}</strong></a><i>{{created_at}}</i>
+			</p>
 				
 				{{#entities}}
 					{{#urls}}
