@@ -41,19 +41,19 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span5">
+    <div class="span4">
       <!--left content-->
-      <h3>@ {{main.searchGovt}} </h3>
+      <h3>@ {{main.searchGovt}}
+	      VS
+      </h3>
+		
 				<br>
 			{{#govtF}}
-				
+				<i>{{created_at}}</i>
 				<script type="text/javascript" src="/js/jquery.highlight-1.1.source.js">
 				jQuery.$('p').highlight(["new york"]);
 				</script>
-				<blockquote>
 				<p>{{text}}</p>
-				</blockquote>
-				<i>{{created_at}}</i>
 				
 				{{#entities}}
 					{{#urls}}
@@ -69,61 +69,48 @@
 
 			{{^govtF}}No tweets{{/govtF}}
     </div>
-    <div class="span2">
-    <h3>  VS </h3>
-    	<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
-    
-    
-	    <a href="https://twitter.com/share" class="twitter-share-button" data-via="entwinesit" data-hashtags="entwines" data-dnt="true">Tweet</a>
-	    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-
-    	</div>
-    <div class="span5">
+    <div class="span4">
       <!--middle content-->
-      
       <h3>The Public # <i>{{main.publicTweet}}</i> </h3>
+		
+		<h3> </h3>
 		
 				<br>
 			{{#publicT}}
+				<i>{{created_at}}</i>
+				<a href="https://www.twitter.com/{{user.screen_name}}">
+				<p><strong>{{user.name}}</strong></p></a>
 				<script type="text/javascript" src="/js/jquery.highlight-1.1.source.js">
 				jQuery.$('p').highlight(["{{main.publicTweet}}"]);
 				</script>
-				<blockquote class="pull-right">
 				<p>{{text}}</p>
-				</blockquote>
-				<p class="text-right">
-				<a href="https://www.twitter.com/{{user.screen_name}}">
-				<p><strong>{{user.name}}</strong></a><i>{{created_at}}</i></p>
-				
 				{{#entities}}
 					{{#urls}}
 						<a href="http://{{display_url}}">http://{{display_url}}</a>
 					{{/urls}}
 					{{#media}}
 						<a href="http://{{media_url}}"><img src="{{media_url}}"></a>
-				</p>
 					{{/media}}
 				{{/entities}}
-				
-			
 				<hr>
 			{{/publicT}}
 
 			{{^publicT}}No tweets{{/publicT}}
 
     </div>
-   </div>
-
-<!-- bottom -->
-
-<div class="row-fluid">
-	<!--<div class="class5">
-	
-	  <div class="span4">
+     <div class="span4">
       <!--right content-->
       	  <!--Edit feed-->
-      	  
+     	 <h2>{{main.mainHeadline}}</h2>
+		<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
+		<p>{{main.mainDescription}}</p>
+    
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="entwinesit" data-hashtags="entwines" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+    
       	<h3>Comments</h3>
       	
       	 <div id="disqus_thread"></div>
@@ -142,9 +129,52 @@
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         
         <hr>
-       </div>
-  </div>
+    <!--
+		{{#main.userPosts}}
+			<strong>{{userName}}</strong><br>
+			<p>{{{userText}}}</p>
+			<hr>
+		{{/main.userPosts}}
 
+		{{^main.userPosts}}No posts{{/main.userPosts}}
+
+		<a href="#myModal" role="button" class="btn" data-toggle="modal">Add More</a>
+
+		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			    <h3 id="myModalLabel">Add to this</h3>
+		  	</div>
+		  	<div class="modal-body">
+				<form method="POST" action="/main/{{main.slug}}/addpost" id="uPost">
+					<legend>Comments</legend>
+					<div>
+						<label for="userName">Username</label>
+						<input id="userName" name="userName" required></input>
+						
+					</div>
+
+					<div>
+						<label for="userText">Text</label>
+						<textarea name="userText" id="userText" required></textarea>
+						
+					</div>
+				
+					<input type="submit" value="Add More" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
+	</div>-->
+
+    </div>
+  </div>
+</div>
+
+<!-- bottom -->
+
+<div class="row-fluid">
+	<!--<div class="class5">
 	<!-- left content -->
 	
 	<div class="span4">
@@ -157,13 +187,19 @@
 		
 		<br>
 		
+		
 		{{/newsD}}
 		
 		{{^newsD}}No News Articles {{/newsD}}	
 		
 		<hr>
 	</div>
-
+	
+	
+</div>
+	
+	<div class="class5">
+	<!-- middle content -->
 	
 	<div class="span4">
 	
@@ -185,4 +221,3 @@
 	</div>
 	
 	</div>
-	

@@ -147,7 +147,7 @@ exports.detail = function(req, res) {
 	mainQuery.exec(function(err, currentMain){
 
 		if (err) {
-			return res.status(500).send("There was an error on the query");
+			return res.status(500).send("There was an error on the query. The Twitter account may not exist.");
 		}
 
 		if (currentMain == null) {
