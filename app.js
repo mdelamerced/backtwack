@@ -83,6 +83,9 @@ app.get('/main/:main_id/delete', routes.deleteMain);
 //add a user post
 app.post('/main/:main_id/addpost', routes.postUser);
 
+//get the about page static
+app.get ('/:about', routes.about);
+
 // API JSON Data routes
 app.get('/data/main',routes.data_all);
 app.get('/data/main/:main_id', routes.data_detail);

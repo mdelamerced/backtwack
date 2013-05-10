@@ -492,3 +492,10 @@ exports.data_all = function(req, res) {
         res.json(jsonData);
     });
 }
+
+exports.about = function(req,res){
+	
+	res.render('about.html');
+	
+	
+	}
