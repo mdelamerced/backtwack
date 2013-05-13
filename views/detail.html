@@ -49,6 +49,10 @@
 			{{#user}}
 			<form>
 			<img src="{{profile_image_url}}">
+			<label class="checkbox">
+				<input type="checkbox" value="choice1">
+				Select this to save and compare
+				</label>
 			
 			{{/user}}
 
@@ -56,15 +60,12 @@
 				<blockquote>
 				<label>
 				<p>{{&text}}</p>
-				<input type="text" name="text1" id="text1" value="{{&text}}">
+				<input type="hidden" name="text1" id="text1" value="{{&text}}">
 				</blockquote>
 				</label>
 				
 				<i>{{created_at}}</i>
-				<label class="checkbox">
-				<input type="checkbox" value="choice1">
-				Select this to save and compare
-				</label>
+				
 				
 				{{#entities}}
 					{{#urls}}
