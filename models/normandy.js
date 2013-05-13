@@ -21,6 +21,29 @@ var userPostSchema = new Schema ({
 	
 })
 
+// saved posts
+
+var savePostSchema = new Schema ({
+	date: Date,
+	choice1 : { 
+		selected1 : Boolean,
+		user1 	: String,
+		text1	: String,
+		tURL1 	: String,
+		e1URL	: String,
+		thumb1 	: String
+	},
+	
+	choice2 : {
+		selected2 : Boolean,
+		user2 	: String,
+		text2	: String,
+		tURL2 	: String,
+		e2URL	: String,
+		thumb2 	: String
+	}
+})
+
 // define main article schema
 var normandySchema = new Schema({
 	slug : { type: String, lowercase: true, required: true, unique: true },
@@ -32,7 +55,8 @@ var normandySchema = new Schema({
 	publicTweet :[String],
 	publicUrl : [String],
 	searchGovt : [String],
-	userPosts : [userPostSchema]
+	userPosts : [userPostSchema],
+	savedPosts : [savePostSchema]
 });
 
 

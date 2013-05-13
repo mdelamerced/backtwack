@@ -90,6 +90,9 @@ app.get ('/:about', routes.about);
 app.get('/data/main',routes.data_all);
 app.get('/data/main/:main_id', routes.data_detail);
 
+// save selected tweets
+app.post('/main/:main_id/savepost', routes.savePost);
+
 // consume a remote API
 //app.get('/remote_api', routes.remote_api);
 
@@ -101,6 +104,8 @@ app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { successRedirect: '/',
                                      failureRedirect: '/login' }));
 */
+
+
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

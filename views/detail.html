@@ -47,16 +47,24 @@
 				
 			{{#govtF}}
 			{{#user}}
+			<form>
 			<img src="{{profile_image_url}}">
+			
 			{{/user}}
+
 				<br>
-				<script type="text/javascript" src="/js/jquery.highlight-1.1.source.js">
-				jQuery.$('p').highlight(["new york"]);
-				</script>
 				<blockquote>
+				<label>
 				<p>{{&text}}</p>
+				<input type="text" name="text1" id="text1" value="{{&text}}">
 				</blockquote>
+				</label>
+				
 				<i>{{created_at}}</i>
+				<label class="checkbox">
+				<input type="checkbox" value="choice1">
+				Select this to save and compare
+				</label>
 				
 				{{#entities}}
 					{{#urls}}
@@ -66,13 +74,14 @@
 						<a href="http://{{media_url}}"><img src="{{media_url}}"></a>
 					{{/media}}
 				{{/entities}}
-
+			</form>
 			<hr>
 			{{/govtF}}
 
 			{{^govtF}}No tweets{{/govtF}}
     </div>
     <div class="span2">
+     <!--middle content-->
     <h3>  VS </h3>
     	<a href="/main/{{main.slug}}/edit" class="btn btn-mini">edit</a>
     
@@ -83,7 +92,7 @@
 
     	</div>
     <div class="span5">
-      <!--middle content-->
+      <!--right content-->
       
       <h3># <i>{{main.publicTweet}}</i> </h3>
 		
@@ -92,6 +101,8 @@
 				<script type="text/javascript" src="/js/jquery.highlight-1.1.source.js">
 				jQuery.$('p').highlight(["{{main.publicTweet}}"]);
 				</script>
+				<form>
+				<label class="checkbox"><input type="checkbox" value="choice2">Select this to save and compare</label>
 				<blockquote class="pull-right">
 				<p>{{&text}}</p>
 				</blockquote>

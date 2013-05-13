@@ -385,6 +385,73 @@ exports.updateMain = function(req, res) {
 	})
 }
 
+
+// user post comments
+exports.savePost = function(req, res) {
+
+	// Get articles from URL params
+	var main_id = req.params.main_id;
+
+	// query database for article
+	normandyModel.findOne({slug:main_id}, function(err, main){
+
+		if (err) {
+			console.error("ERROR");
+			console.error(err);
+			res.send("There was an error querying for "+ main_id).status(500);
+		}
+		
+		if (req.body.selected1) {
+		savedPair.choice1.selected1 = true;
+		}
+
+		if (main != null) {
+			
+			// add a new post
+			var savedPair = {
+				date : moment(datetimestr, "YYYY-MM-DD HH:mm").toDate(),
+				choice1 :{
+			//		selected1 : Boolean,
+					user1 	: req.body.user1,
+					text1	: req.body.text1,
+					tURL1 	: req.body.tURL1,
+					e1URL	: req.body.e1URL,
+					thumb1 	: req.body.thumb1
+				},
+				choice2 :{
+				//	selected2 : Boolean,
+					user2 	: req.body.user2,
+					text2	: req.body.text2,
+					tURL2 	: req.body.tURL2,
+					e2URL	: req.body.e2URL,
+					thumb2 	: req.body.thumb2
+				},
+			};
+
+			console.log("new saved post");
+			console.log(savedPair);
+
+			main.savedPosts.push(savedPair);
+			main.save(function(err){
+				if (err) {
+					console.error(err);
+					res.send(err.message);
+				}
+			});
+
+			res.redirect('/main/' + main_id);
+
+
+		} else {
+
+			// unable to find article, return 404
+			console.error("unable to find main: " + main_id);
+			return res.status(404).render('404.html');
+		}
+	})
+}
+
+
 // user post comments
 exports.postUser = function(req, res) {
 
