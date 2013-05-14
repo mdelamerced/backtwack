@@ -6,7 +6,7 @@ var nameValidation = function(val) {
 	console.log("inside name validation");
 	console.log(val);
 	
-	if  (/[^a-zA-Z0-9]/.test(val)) {
+	if  (/[^a-zA-Z0-9+^\w +/g]/.test(val)) {
 		console.log("We'll add the special characters for you");
 		return false;
 	} else {
