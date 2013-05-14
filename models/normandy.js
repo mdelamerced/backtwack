@@ -6,10 +6,11 @@ var nameValidation = function(val) {
 	console.log("inside name validation");
 	console.log(val);
 	
-	if (val.length >= 5) {
-		return true;
-	} else {
+	if  (/[^a-zA-Z0-9]/.test(val)) {
+		console.log("We'll add the special characters for you");
 		return false;
+	} else {
+		return true;
 	}
 }
 
@@ -47,14 +48,22 @@ var savePostSchema = new Schema ({
 // define main article schema
 var normandySchema = new Schema({
 	slug : { type: String, lowercase: true, required: true, unique: true },
-	mainHeadline : { type: String, required : true }, 
+	mainHeadline : { type: String, required : true}, 
 	mainDescription : String,
 	imageLink : [String],
 	lastupdated : { type: Date, default: Date.now },
 	googledNews :[String],
-	publicTweet :[String],
+	publicTweet :{ type :[String],
+				   required : true,
+				   validate: [nameValidation, 'Alphanumeric characters only']
+				  },
+					 
 	publicUrl : [String],
-	searchGovt : [String],
+	searchGovt : { type :[String],
+				   required : true,
+				   validate: [nameValidation, 'Alphanumeric characters only']
+				  },
+				  
 	userPosts : [userPostSchema],
 	savedPosts : [savePostSchema]
 });

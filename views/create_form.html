@@ -63,10 +63,11 @@
 			
 			<label for="publicTweet">
 		
-			#	<input class="input-big" type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required>
-			<!--		{{#errors.publicTweet}}
+		
+				{{#errors.publicTweet}}
 				<span class="help-block alert alert-error">{{type}}</span>
-				{{/errors.publicTweet}}-->
+				{{/errors.publicTweet}}
+				#	<input class="input-big" type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required>
 			</label>
 			</h3>
 			<button type="submit" class="btn btn-large btn-primary" type="button">See the feed</button>

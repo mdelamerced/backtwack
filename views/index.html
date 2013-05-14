@@ -42,18 +42,20 @@
     <div class ="row">
 	<div class="hero-unit">    
 
-    <form class="form-inline" method="POST" action="/create">
+    <form name="frontcreate" class="form-inline" method="POST" action="/create">
 			
 			<h3>@ + #</h3>
 			<p>What is going on in the world around you? </p>
 			<p>Compare Twitter feeds from two different sources.</p>
+			
+			
 			<label for="searchGovt"> 			
 				{{#errors.searchGovt}}
 				<span class="help-block alert alert-error">{{type}}</span>
 				{{/errors.searchGovt}}
-			@	<input class="input-big" type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}" required>
+			@	<input class="required" type="text" name="searchGovt" id="searchGovt" value="{{main.searchGovt}}" required>
 				
-	<!--			
+	<!--
 				<span class="help-block alert alert-error">{{type}}</span>		
 				 -->
 			</label>
@@ -62,10 +64,11 @@
 			
 			<label for="publicTweet">
 		
-			#	<input class="input-big" type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required>
+		
 				{{#errors.publicTweet}}
 				<span class="help-block alert alert-error">{{type}}</span>
 				{{/errors.publicTweet}}
+			#	<input class="required" type="text" name="publicTweet" id="publicTweet" value="{{main.publicTweet}}" required>
 			</label>
 			</h3>
 			<button type="submit" class="btn btn-large btn-primary" type="button">See the feed</button>
@@ -98,8 +101,10 @@
     </div>
     
     <div class="span4">
+    
     <a class="twitter-timeline" href="https://twitter.com/entwinesit" data-widget-id="331224354903949312">Tweets by @entwinesit</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	
     </div>
 	</div> 
 	</div>

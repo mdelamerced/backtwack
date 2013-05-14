@@ -114,19 +114,19 @@ exports.createFront = function(req, res){
 			console.error(err); // log out to Terminal all errors
 
 			var templateData = {
-			//	page_title : 'Start a new article',
+				page_title : 'Start a new topic',
 				errors : err.errors, 
 				main : req.body
 			};
 
 			res.render('create_form.html', templateData);
-			// return res.send("There was an error when creating a new article");
+		//	return res.send("There was an error when creating a new article");
 
 		} else {
 			console.log("Created a new article!");
 			console.log(newMain);
 			
-			// redirect to the astronaut's page
+			// redirect to the detail page
 			res.redirect('/main/'+ newMain.slug)
 		}
 	});
@@ -292,19 +292,19 @@ exports.createMain = function(req, res) {
 			console.error(err); // log out to Terminal all errors
 
 			var templateData = {
-				page_title : 'Start a new article',
+				page_title : 'Start a new topic',
 				errors : err.errors, 
 				main : req.body
 			};
 
 			res.render('create_form.html', templateData);
-			// return res.send("There was an error when creating a new article");
+			return res.send("There was an error when creating a new article. Alphanumeric characters only. We'll take care of the rest.");
 
 		} else {
 			console.log("Created a new article!");
 			console.log(newMain);
 			
-			// redirect to the astronaut's page
+			// redirect to the detail page
 			res.redirect('/main/'+ newMain.slug)
 		}
 	});
@@ -405,6 +405,10 @@ exports.savePost = function(req, res) {
 		savedPair.choice1.selected1 = true;
 		}
 
+		if (req.body.selected2) {
+		savedPair.choice2.selected1 = true;
+		}
+		
 		if (main != null) {
 			
 			// add a new post
