@@ -120,7 +120,6 @@ exports.createFront = function(req, res){
 			};
 
 			res.render('create_form.html', templateData);
-		//	return res.send("There was an error when creating a new article");
 
 		} else {
 			console.log("Created a new article!");

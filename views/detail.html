@@ -47,7 +47,7 @@
 				
 			{{#govtF}}
 			{{#user}}
-			<form>
+			<form method="POST" action="/main/{{main.slug}}/savePost" id="savePost">
 			<img src="{{profile_image_url}}">
 			<label class="checkbox">
 				<input type="checkbox" value="choice1">
@@ -91,7 +91,14 @@
 	    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 
-    	</div>
+    <div id="save these">
+    	
+    	<p> Select one Tweet from each column to see together and save it for everyone </p>
+    	
+    	<button type="submit" class="btn btn-info" type="button">Save the feed</button>
+    	
+    </div>
+    </div>
     <div class="span5">
       <!--right content-->
       
@@ -106,6 +113,7 @@
 				<label class="checkbox"><input type="checkbox" value="choice2">Select this to save and compare</label>
 				<blockquote class="pull-right">
 				<p>{{&text}}</p>
+				<input type="hidden" name="text2" id="text2" value="{{&text}}">
 				</blockquote>
 				<p class="text-right">
 				<a href="https://www.twitter.com/{{user.screen_name}}">
@@ -139,7 +147,16 @@
 	<!--<div class="class5">
 	
 	  <div class="span4">
-      <!--right content-->
+      <!--saved posts-->
+      
+      	{{#main.savedPosts}}
+      	
+      		{{choice1.text1}}
+      		
+      		{{choice2.text2}}
+      	
+      	
+      	{{/main.savedPosts}}
       	  <!--Edit feed-->
       	  
       	<h3>Comments</h3>
